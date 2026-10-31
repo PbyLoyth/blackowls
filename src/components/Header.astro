@@ -1,0 +1,345 @@
+---
+import { nav, tools, socials } from '../data/site.js';
+const { theme = 'dark' } = Astro.props;
+---
+
+<header class:list={['nav', `nav--${theme}`]}>
+  <div class="nav__in">
+    <a class="brand" href="/" aria-label="Black owLs ana sayfa">
+      <img src="/img/owl-mark.webp" width="54" height="72" alt="" />
+      <span>Black owLs</span>
+    </a>
+
+    <nav class="links" aria-label="Ana menü">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      <details class="tools" data-tools>
+        <summary>Araçlar</summary>
+        <ul>
+          {
+            tools.map((t) => (
+              <li>
+                <a href={t.href} target="_blank" rel="noopener">
+                  <b>{t.label}</b>
+                  <span>{t.note}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+    </nav>
+
+    <a class="pill pill--sm join" href="/basvuru">Katıl</a>
+
+    <button class="burger" type="button" data-menu-open aria-label="Menüyü aç" aria-haspopup="dialog">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<dialog class="menu" data-menu aria-label="Menü">
+  <div class="menu__top" tabindex="-1" autofocus>
+    <a class="brand" href="/" aria-label="Black owLs ana sayfa">
+      <img src="/img/owl-mark.webp" width="54" height="72" alt="" />
+      <span>Black owLs</span>
+    </a>
+    <button class="menu__x" type="button" data-menu-close aria-label="Menüyü kapat"></button>
+  </div>
+  <nav aria-label="Mobil menü">
+    {nav.map((item) => <a class="menu__link" href={item.href}>{item.label}</a>)}
+    <a class="menu__link menu__link--hot" href="/basvuru">Aramıza katıl</a>
+  </nav>
+  <div class="menu__foot">
+    <div>
+      <p>Araçlar</p>
+      <ul>{tools.map((t) => <li><a href={t.href} target="_blank" rel="noopener">{t.label}</a></li>)}</ul>
+    </div>
+    <div>
+      <p>Takip et</p>
+      <ul>{socials.map((s) => <li><a href={s.href} target="_blank" rel="noopener">{s.label}</a></li>)}</ul>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    height: var(--nav-h);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  .nav--dark {
+    background: rgb(22 22 23 / 0.86);
+    color: var(--paper);
+  }
+
+  .nav--light {
+    background: rgb(250 250 252 / 0.78);
+    color: var(--ink);
+  }
+
+  .nav__in {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    width: min(100% - 2 * var(--gutter), 1160px);
+    height: 100%;
+    margin-inline: auto;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: auto;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -0.016em;
+  }
+
+  .brand img {
+    width: 24px;
+    height: 32px;
+  }
+
+  .links {
+    display: flex;
+    align-items: center;
+    gap: clamp(16px, 2.2vw, 30px);
+    font-size: 0.875rem;
+  }
+
+  .links > a,
+  .tools summary {
+    opacity: 0.82;
+    cursor: pointer;
+    transition: opacity 160ms ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .links > a:hover,
+    .tools summary:hover {
+      opacity: 1;
+    }
+  }
+
+  .tools {
+    position: relative;
+  }
+
+  .tools summary {
+    list-style: none;
+  }
+
+  .tools summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .tools[open] summary {
+    opacity: 1;
+  }
+
+  .tools ul {
+    position: absolute;
+    top: calc(100% + 18px);
+    right: -14px;
+    width: 264px;
+    padding: 8px;
+    border-radius: var(--r-m);
+    color: var(--paper);
+    background: rgb(29 29 31 / 0.97);
+    -webkit-backdrop-filter: saturate(180%) blur(28px);
+    backdrop-filter: saturate(180%) blur(28px);
+    box-shadow: 0 24px 60px rgb(0 0 0 / 0.42), inset 0 0 0 0.5px rgb(255 255 255 / 0.14);
+    transform-origin: top right;
+    animation: pop 200ms var(--ease);
+  }
+
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  .tools li a {
+    display: grid;
+    padding: 9px 12px;
+    border-radius: var(--r-s);
+    transition: background-color 140ms ease;
+  }
+
+  .tools li b {
+    font-weight: 600;
+  }
+
+  .tools li span {
+    color: var(--g3);
+    font-size: 0.8125rem;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tools li a:hover {
+      background: rgb(255 255 255 / 0.1);
+    }
+  }
+
+  .burger {
+    display: none;
+    position: relative;
+    width: 44px;
+    height: 44px;
+    margin-right: -11px;
+  }
+
+  .burger span {
+    position: absolute;
+    left: 13px;
+    right: 13px;
+    height: 1.5px;
+    background: currentColor;
+  }
+
+  .burger span:first-child {
+    top: 18px;
+  }
+
+  .burger span:last-child {
+    top: 25px;
+  }
+
+  @media (max-width: 900px) {
+    .links {
+      display: none;
+    }
+
+    .burger {
+      display: block;
+    }
+
+    .nav__in {
+      gap: 8px;
+    }
+  }
+
+  .menu {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0 var(--gutter) 28px;
+    border: 0;
+    background: rgb(0 0 0 / 0.86);
+    -webkit-backdrop-filter: saturate(180%) blur(30px);
+    backdrop-filter: saturate(180%) blur(30px);
+    color: var(--paper);
+    overflow-y: auto;
+  }
+
+  .menu[open] {
+    display: flex;
+    flex-direction: column;
+    animation: fade 220ms ease;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .menu::backdrop {
+    background: transparent;
+  }
+
+  .menu__top {
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--nav-h);
+    flex: none;
+  }
+
+  .menu__x {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    margin-right: -11px;
+  }
+
+  .menu__x::before,
+  .menu__x::after {
+    content: '';
+    position: absolute;
+    left: 13px;
+    right: 13px;
+    top: 21px;
+    height: 1.5px;
+    background: currentColor;
+    transform: rotate(45deg);
+  }
+
+  .menu__x::after {
+    transform: rotate(-45deg);
+  }
+
+  .menu nav {
+    display: grid;
+    padding-block: 20px 28px;
+  }
+
+  .menu__link {
+    display: block;
+    padding-block: 7px;
+    font-size: 2rem;
+    line-height: 1.14;
+    letter-spacing: -0.024em;
+    font-weight: 600;
+  }
+
+  .menu__link--hot {
+    color: var(--amber);
+  }
+
+  .menu__foot {
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    color: var(--g2);
+  }
+
+  .menu__foot p {
+    margin-bottom: 6px;
+    color: var(--g3);
+    font-size: 0.8125rem;
+  }
+
+  .menu__foot a {
+    display: block;
+    padding-block: 5px;
+  }
+</style>
+
+<script>
+  const menu = document.querySelector('[data-menu]');
+  const tools = document.querySelector('[data-tools]');
+
+  document.querySelector('[data-menu-open]')?.addEventListener('click', () => menu.showModal());
+  document.querySelector('[data-menu-close]')?.addEventListener('click', () => menu.close());
+  menu?.addEventListener('click', (ev) => {
+    if (ev.target.closest('a')) menu.close();
+  });
+
+  document.addEventListener('click', (ev) => {
+    if (tools?.open && !tools.contains(ev.target)) tools.open = false;
+  });
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && tools?.open) tools.open = false;
+  });
+</script>

@@ -1,0 +1,118 @@
+---
+import { site, socials, tools } from '../data/site.js';
+const year = new Date().getFullYear();
+---
+
+<footer class="foot on-light">
+  <div class="w">
+    <p class="foot__note">
+      Black owLs, Squad’ın yapımcısı Offworld Industries ile bağlantılı değildir. Oyun görüntüleri takımın kendi fragmanından alınmıştır.
+    </p>
+
+    <div class="foot__cols">
+      <div>
+        <h2>Black owLs</h2>
+        <ul>
+          <li><a href="/#neden">Neden</a></li>
+          <li><a href="/#basarilar">Başarılar</a></li>
+          <li><a href="/#kadro">Kadro</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>KAFES</h2>
+        <ul>
+          <li><a href="/#kafes">Sunucu</a></li>
+          <li><a href="/kurallar">Kurallar</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Katıl</h2>
+        <ul>
+          <li><a href="/basvuru#takim">Takım başvurusu</a></li>
+          <li><a href="/basvuru#topluluk">Topluluk başvurusu</a></li>
+          <li><a href={`mailto:${site.email}`}>İletişim</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Araçlar</h2>
+        <ul>{tools.map((t) => <li><a href={t.href} target="_blank" rel="noopener">{t.label}</a></li>)}</ul>
+      </div>
+      <div>
+        <h2>Takip et</h2>
+        <ul>{socials.map((s) => <li><a href={s.href} target="_blank" rel="noopener">{s.label}</a></li>)}</ul>
+      </div>
+    </div>
+
+    <div class="foot__legal">
+      <p>© {year} Black owLs Squad Türkiye. Tüm hakları saklıdır.</p>
+      <ul>
+        <li><a href="/gizlilik-politikasi">Gizlilik</a></li>
+        <li><a href="/kullanim-kosullari">Kullanım koşulları</a></li>
+        <li><a href="/kvkk-kosullari">KVKK</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    background: var(--paper);
+    color: var(--g4);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    padding-block: 28px 20px;
+  }
+
+  .foot__note {
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--g2);
+  }
+
+  .foot__cols {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 24px;
+    padding-block: 22px 26px;
+  }
+
+  h2 {
+    margin-bottom: 8px;
+    color: var(--ink);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: -0.003em;
+  }
+
+  li a {
+    display: inline-block;
+    padding-block: 3px;
+    transition: color 140ms ease;
+  }
+
+  .foot__legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 6px 24px;
+    padding-top: 14px;
+    border-top: 1px solid var(--g2);
+  }
+
+  .foot__legal ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 18px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    li a:hover {
+      color: var(--ink);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .foot__cols {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

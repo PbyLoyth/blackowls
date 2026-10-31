@@ -1,0 +1,86 @@
+---
+import { applications } from '../data/site.js';
+---
+
+{
+  !applications.open && (
+    <dialog class="notice" data-apply-notice aria-label="Başvuru bilgilendirmesi">
+      <div class="notice__in">
+        <img src="/img/owl-black.webp" width="63" height="84" alt="" />
+        <p>{applications.notice}</p>
+        <button class="pill" type="button" data-apply-close autofocus>Tamam</button>
+      </div>
+    </dialog>
+  )
+}
+
+<style>
+  .notice {
+    width: min(26.5rem, calc(100vw - 40px));
+    padding: 0;
+    border: 0;
+    border-radius: 24px;
+    background: var(--tile-2);
+    color: var(--paper);
+    box-shadow: 0 30px 80px rgb(0 0 0 / 0.45);
+  }
+
+  :global(body.light) .notice {
+    background: var(--white);
+    color: var(--ink);
+  }
+
+  .notice[open] {
+    animation: notice-in 280ms var(--ease);
+  }
+
+  @keyframes notice-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  .notice::backdrop {
+    background: rgb(0 0 0 / 0.58);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
+  .notice__in {
+    display: grid;
+    justify-items: center;
+    gap: 18px;
+    padding: 30px 26px 26px;
+    text-align: center;
+  }
+
+  .notice__in p {
+    line-height: 1.42;
+  }
+
+  .notice__in .pill {
+    width: 100%;
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .notice::backdrop {
+      background: rgb(0 0 0 / 0.82);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+</style>
+
+<script>
+  const notice = document.querySelector('[data-apply-notice]');
+  if (notice) {
+    document.querySelectorAll('[data-apply]').forEach((btn) => {
+      btn.addEventListener('click', () => notice.showModal());
+    });
+    notice.querySelector('[data-apply-close]').addEventListener('click', () => notice.close());
+    notice.addEventListener('click', (ev) => {
+      if (ev.target === notice) notice.close();
+    });
+  }
+</script>

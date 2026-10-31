@@ -1,0 +1,169 @@
+---
+import ApplyButton from './ApplyButton.astro';
+import ApplyNotice from './ApplyNotice.astro';
+import { paths } from '../data/paths.js';
+
+const rows = [
+  ['Kimin için', 'who'],
+  ['Tempo', 'tempo'],
+  ['Aranan', 'seek'],
+  ['Dönüş', 'reply'],
+];
+---
+
+<section class="join on-light" id="katil" aria-labelledby="join-title">
+  <div class="w">
+    <h2 class="title" id="join-title" data-fade>Sana hangisi uygun?</h2>
+    <p class="join__lead intro" data-fade>İki kapı, iki ayrı form. Hatalı form hoş karşılanmaz, o yüzden önce doğru kapıyı seç.</p>
+
+    <div class="cols">
+      {
+        paths.map((p, i) => (
+          <article class="col" data-fade style={`--d:${i * 70}ms`}>
+            <img class="col__img" src={`/img/owl-${p.icon}.webp`} alt="" width="210" height="280" loading="lazy" decoding="async" />
+            <h3 class="sub">{p.name}</h3>
+            <p class="col__kicker">{p.kicker}</p>
+            <div class="col__cta">
+              <ApplyButton class="pill" form={p.form}>Başvur</ApplyButton>
+            </div>
+
+            <div class="ranks">
+              <ol aria-label={`${p.name} rütbeleri`}>
+                {p.ladder.map((rank) => (
+                  <li>
+                    <img src={`/img/owl-${rank.color}.webp`} alt="" width="48" height="64" loading="lazy" decoding="async" />
+                    <span>{rank.short}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {rows.map(([label, key]) => (
+              <div class="spec">
+                <p class="spec__k">{label}</p>
+                <p class="spec__v">{p[key]}</p>
+              </div>
+            ))}
+
+            <p class="spec spec--form"><b>{p.questions}</b> soruluk form</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+  <ApplyNotice />
+</section>
+
+<style>
+  .join {
+    padding-block: var(--sec);
+    background: var(--white);
+    color: var(--ink);
+    text-align: center;
+  }
+
+  .join__lead {
+    max-width: 34em;
+    margin: 14px auto clamp(36px, 5vw, 72px);
+    color: var(--g4);
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(11, auto);
+    max-width: 800px;
+    margin-inline: auto;
+    gap: 0 clamp(16px, 3vw, 44px);
+  }
+
+  .col {
+    display: grid;
+    grid-row: span 11;
+    grid-template-rows: subgrid;
+    justify-items: center;
+  }
+
+  .col__img {
+    width: clamp(120px, 14vw, 170px);
+    height: auto;
+    margin-bottom: 18px;
+  }
+
+  .col__kicker {
+    margin-top: 4px;
+    color: var(--g4);
+  }
+
+  .col__cta {
+    margin-block: 16px 22px;
+  }
+
+  .ranks {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    min-height: 118px;
+    padding-block: 16px;
+    border-top: 1px solid var(--g2);
+  }
+
+  .ranks ol {
+    display: flex;
+    justify-content: center;
+    gap: clamp(10px, 1.6vw, 22px);
+  }
+
+  .ranks li {
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+  }
+
+  .ranks img {
+    width: 42px;
+    height: auto;
+  }
+
+  .ranks span {
+    color: var(--g4);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .spec {
+    width: 100%;
+    padding-block: 14px;
+    border-top: 1px solid var(--g2);
+  }
+
+  .spec__k {
+    color: var(--g4);
+    font-size: 0.8125rem;
+  }
+
+  .spec__v {
+    max-width: 19em;
+    margin-inline: auto;
+    font-weight: 500;
+    line-height: 1.32;
+  }
+
+  .spec--form b {
+    font-weight: 600;
+  }
+
+  @media (max-width: 820px) {
+    .cols {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: none;
+      gap: 56px;
+    }
+
+    .col {
+      grid-row: auto;
+      grid-template-rows: none;
+    }
+  }
+</style>

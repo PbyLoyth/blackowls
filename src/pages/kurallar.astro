@@ -1,0 +1,361 @@
+---
+import Base from '../layouts/Base.astro';
+import rules from '../data/rules.json';
+import { site } from '../data/site.js';
+
+const DOC =
+  'https://docs.google.com/document/d/e/2PACX-1vTjHH_yAUyJEJMaHeyV1b_HGQgW3ocWeTbM685GFQRPw9lVqaNvldKYisPtdFfTXxeQKzrgHdTCSlr5/pub';
+
+const anchor = (id) => `k${String(id).replace('.', '-')}`;
+const sentence = (s) => {
+  const low = s.toLocaleLowerCase('tr');
+  return low.charAt(0).toLocaleUpperCase('tr') + low.slice(1);
+};
+const heading = (s) => sentence(s).replace('Squad leader', 'Squad Leader').replace('main camp', 'Main camp');
+
+const lineKind = (line) => {
+  if (line.startsWith('♦')) return 'item';
+  if (/^(Ek olarak:|UYARI:)/.test(line)) return 'note';
+  return 'text';
+};
+
+const total = rules.sections.reduce((n, s) => n + s.rules.length, 0);
+---
+
+<Base
+  theme="light"
+  title="KAFES sunucu kuralları | Black owLs"
+  description="Black owLs KAFES Squad sunucusunun güncel kuralları: genel, Squad Leader, araç, main camp, support ve seed kuralları."
+>
+  <div class="page on-light">
+    <header class="head">
+      <h1 class="title">Kurallar. <span>KAFES’te oynayan herkes bunları okumuş sayılır.</span></h1>
+      <p class="head__server cap">{site.server.name}</p>
+      <p class="head__state"><i aria-hidden="true"></i>{site.server.status}</p>
+    </header>
+
+    <div class="doc">
+      <aside class="side">
+        <label class="search">
+          <span class="sr">Kurallarda ara</span>
+          <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" /><path d="M13 13l5 5" /></svg>
+          <input type="search" placeholder="Ara: mortar, TK, switch" autocomplete="off" data-rule-search />
+        </label>
+        <p class="side__count cap" data-rule-count aria-live="polite">{total} kural</p>
+        <nav aria-label="Kural bölümleri">
+          <ol>
+            {rules.sections.map((s) => <li><a href={`#b-${s.id}`}>{heading(s.title)}</a></li>)}
+          </ol>
+        </nav>
+        <a class="more more--out" href={DOC} target="_blank" rel="noopener">Kaynak belge</a>
+      </aside>
+
+      <article class="body">
+        {rules.preface.map((line) => <p class="preface">{line}</p>)}
+
+        {
+          rules.sections.map((s) => (
+            <section class="sec" id={`b-${s.id}`} data-rule-section>
+              <h2 class="sub">{heading(s.title)}</h2>
+              {s.intro.map((line) => <p class="sec__intro">{line}</p>)}
+              <ol class="list">
+                {s.rules.map((r) => (
+                  <li class="rule" id={anchor(r.id)} data-rule>
+                    <a class="rule__id" href={`#${anchor(r.id)}`} data-rule-link aria-label={`Kural ${r.id} bağlantısını kopyala`}>
+                      {/^\d/.test(r.id) ? r.id : '·'}
+                    </a>
+                    <div class="rule__body">
+                      {r.title && <h3>{r.title}</h3>}
+                      {r.text.map((line) => {
+                        const kind = lineKind(line);
+                        const clean = line.replace(/^♦\s*/, '');
+                        if (kind === 'item') return <p class="is-item">{clean}</p>;
+                        if (kind === 'note') return <p class="is-note">{clean}</p>;
+                        return <p>{clean}</p>;
+                      })}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ))
+        }
+        <p class="empty" data-rule-empty hidden>Bu aramayla eşleşen kural yok.</p>
+      </article>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page {
+    width: min(100% - 2 * var(--gutter), 1160px);
+    margin-inline: auto;
+    padding-block: calc(var(--nav-h) + clamp(36px, 6vw, 80px)) clamp(64px, 8vw, 112px);
+  }
+
+  .head {
+    margin-bottom: clamp(32px, 5vw, 64px);
+  }
+
+  .head .title {
+    max-width: 19em;
+    font-size: clamp(2.25rem, 4.4vw, 3.75rem);
+  }
+
+  .head__server {
+    margin-top: 14px;
+    color: var(--g4);
+    font-family: var(--mono);
+  }
+
+  .head__state {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    margin-top: 12px;
+    font-weight: 500;
+  }
+
+  .head__state i {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--amber-ink);
+    transform: translateY(-1px);
+  }
+
+  .doc {
+    display: grid;
+    grid-template-columns: 15.5rem minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 88px);
+    align-items: start;
+  }
+
+  .side {
+    position: sticky;
+    top: calc(var(--nav-h) + 24px);
+    display: grid;
+    gap: 10px;
+    max-height: calc(100svh - var(--nav-h) - 48px);
+    overflow-y: auto;
+  }
+
+  .search {
+    position: relative;
+    display: block;
+  }
+
+  .search svg {
+    position: absolute;
+    left: 13px;
+    top: 13px;
+    fill: none;
+    stroke: var(--g4);
+    stroke-width: 1.7;
+    stroke-linecap: round;
+  }
+
+  .search input {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px 0 37px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--paper);
+    color: var(--ink);
+    font: inherit;
+    font-size: 1rem;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .search input::placeholder {
+    color: var(--g4);
+  }
+
+  .search input:focus-visible {
+    outline: 2px solid var(--amber-ink);
+    outline-offset: 0;
+  }
+
+  .side__count {
+    color: var(--g4);
+    padding-inline: 2px;
+  }
+
+  .side li a {
+    display: block;
+    padding: 5px 2px;
+    color: var(--g4);
+    transition: color 140ms ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .side li a:hover {
+      color: var(--ink);
+    }
+  }
+
+  .body {
+    min-width: 0;
+    max-width: 44rem;
+  }
+
+  .preface {
+    margin-bottom: 12px;
+    font-size: 1.1875rem;
+    line-height: 1.4;
+    letter-spacing: -0.012em;
+  }
+
+  .sec {
+    margin-top: clamp(36px, 5vw, 60px);
+    scroll-margin-top: calc(var(--nav-h) + 20px);
+  }
+
+  .sec__intro {
+    margin-top: 8px;
+    color: var(--g4);
+  }
+
+  .list {
+    margin-top: 12px;
+  }
+
+  .rule {
+    display: grid;
+    grid-template-columns: 3.4rem minmax(0, 1fr);
+    gap: 2px 12px;
+    padding-block: 14px;
+    border-top: 1px solid var(--g1);
+    scroll-margin-top: calc(var(--nav-h) + 20px);
+    transition: background-color 400ms ease;
+  }
+
+  .rule:target {
+    background: rgb(255 159 10 / 0.14);
+    box-shadow: -10px 0 0 rgb(255 159 10 / 0.14), 10px 0 0 rgb(255 159 10 / 0.14);
+    border-radius: 2px;
+  }
+
+  .rule__id {
+    position: relative;
+    color: var(--amber-ink);
+    font-weight: 600;
+  }
+
+  .rule__id[data-done]::after {
+    content: 'Bağlantı kopyalandı';
+    position: absolute;
+    left: 0;
+    top: -30px;
+    padding: 4px 10px;
+    border-radius: 980px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .rule__body {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .rule__body h3 {
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+
+  .is-item {
+    position: relative;
+    padding-left: 1em;
+  }
+
+  .is-item::before {
+    content: '';
+    position: absolute;
+    left: 1px;
+    top: 0.62em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--g3);
+  }
+
+  .is-note {
+    color: var(--g4);
+  }
+
+  .empty {
+    padding-block: 28px;
+    color: var(--g4);
+  }
+
+  [data-hidden] {
+    display: none;
+  }
+
+  @media (max-width: 860px) {
+    .doc {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .side {
+      position: static;
+      max-height: none;
+    }
+
+    .side nav ol {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 16px;
+    }
+
+    .rule {
+      grid-template-columns: 2.75rem minmax(0, 1fr);
+    }
+  }
+</style>
+
+<script>
+  const input = document.querySelector('[data-rule-search]');
+  const rules = [...document.querySelectorAll('[data-rule]')];
+  const sections = [...document.querySelectorAll('[data-rule-section]')];
+  const count = document.querySelector('[data-rule-count]');
+  const empty = document.querySelector('[data-rule-empty]');
+  const total = rules.length;
+  const norm = (s) => s.toLocaleLowerCase('tr');
+  const texts = rules.map((r) => norm(r.textContent));
+
+  input?.addEventListener('input', () => {
+    const q = norm(input.value.trim());
+    let hits = 0;
+    rules.forEach((r, i) => {
+      const on = !q || texts[i].includes(q);
+      r.toggleAttribute('data-hidden', !on);
+      if (on) hits += 1;
+    });
+    sections.forEach((s) => {
+      s.toggleAttribute('data-hidden', !s.querySelector('[data-rule]:not([data-hidden])'));
+    });
+    count.textContent = q ? `${total} kuraldan ${hits} eşleşme` : `${total} kural`;
+    empty.hidden = hits > 0;
+  });
+
+  // Adminler için: kural numarasına tıklayınca doğrudan bağlantı kopyalanır
+  document.querySelectorAll('[data-rule-link]').forEach((a) => {
+    a.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(a.href);
+        a.setAttribute('data-done', '');
+        setTimeout(() => a.removeAttribute('data-done'), 1400);
+      } catch {
+        /* kopyalanamazsa bağlantı yine de çalışır */
+      }
+    });
+  });
+</script>

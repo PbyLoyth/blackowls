@@ -1,0 +1,43 @@
+---
+const text =
+  '2018’den beri tek bir gayemiz var: sadece Türk oyunculardan oluşan bir kadroyla uluslararası arenada bir numara olmak. Buna en yakın başarımız, 2020’de OWI turnuvasında oynadığımız yarı final. Geçmişteki başarılarımız, geleceğimiz için en düşük hedeftir.';
+const words = text.split(' ');
+---
+
+<section class="why" id="neden" aria-label="Neden Black owLs">
+  <div class="w">
+    <p class="why__text" data-words>
+      {words.map((word, i) => <span class="word">{word}{i < words.length - 1 ? ' ' : ''}</span>)}
+    </p>
+  </div>
+</section>
+
+<style>
+  .why {
+    padding-block: var(--sec);
+    background: var(--black);
+  }
+
+  .why__text {
+    max-width: 21em;
+    font-size: clamp(2.125rem, 4.9vw, 4.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+
+  :global(.js) .word {
+    color: var(--g4);
+    transition: color 320ms ease;
+  }
+
+  :global(.js) .word.on {
+    color: var(--paper);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .word {
+      color: var(--paper);
+    }
+  }
+</style>

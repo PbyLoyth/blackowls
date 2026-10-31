@@ -1,0 +1,17 @@
+---
+import { applications } from '../data/site.js';
+
+const { form, class: className, ...rest } = Astro.props;
+---
+
+{
+  applications.open ? (
+    <a class={className} href={form} target="_blank" rel="noopener" {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button class={className} type="button" data-apply {...rest}>
+      <slot />
+    </button>
+  )
+}

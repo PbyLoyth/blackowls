@@ -1,0 +1,133 @@
+---
+import roster from '../data/roster.json';
+---
+
+<section class="team" id="kadro" aria-labelledby="kadro-title">
+  <div class="w">
+    <h2 class="title" id="kadro-title" data-fade>
+      Kadro. <span><span data-roster-count>{roster.length}</span> BLACK owL, Discord’dan canlı.</span>
+    </h2>
+
+    <ul class="grid" data-roster data-fade>
+      {
+        roster.map((m) => (
+          <li>
+            <img src={m.image} alt="" width="176" height="176" loading="lazy" decoding="async" />
+            <span>{m.name}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="cursor" data-cursor aria-hidden="true">
+    <svg width="17" height="18" viewBox="0 0 17 18"><path d="M1 1l15 6.2-6.4 2.2L7 16z" /></svg>
+    <span data-cursor-name></span>
+  </div>
+</section>
+
+<style>
+  .team {
+    position: relative;
+    padding-block: var(--sec) calc(var(--sec) * 0.6);
+    background: var(--black);
+  }
+
+  .team .title {
+    margin-bottom: clamp(36px, 5vw, 72px);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: clamp(24px, 3.4vw, 44px) clamp(12px, 2vw, 28px);
+  }
+
+  .grid li {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .grid img {
+    width: 100%;
+    max-width: 136px;
+    aspect-ratio: 1;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--tile-2);
+    transition: transform 320ms var(--ease), box-shadow 200ms ease;
+  }
+
+  .grid span {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* Figma'nın çok oyunculu imleci: üzerine gelince isim etiketi imleci takip eder */
+  .cursor {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 40;
+    display: none;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 140ms ease;
+    will-change: transform;
+  }
+
+  .cursor svg {
+    fill: var(--amber);
+    stroke: var(--black);
+    stroke-width: 1;
+  }
+
+  .cursor span {
+    position: absolute;
+    left: 13px;
+    top: 15px;
+    padding: 3px 9px 4px;
+    border-radius: 4px 12px 12px 12px;
+    background: var(--amber);
+    color: var(--black);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .cursor[data-on] {
+    opacity: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .grid img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 0 2px var(--black), 0 0 0 4px var(--amber);
+    }
+
+    .cursor {
+      display: block;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 460px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

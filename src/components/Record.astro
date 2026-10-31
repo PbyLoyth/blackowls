@@ -1,0 +1,242 @@
+---
+import { tournaments, tally } from '../data/tournaments.js';
+
+const champions = tournaments.filter((t) => t.result === 'champion');
+const rest = tournaments.filter((t) => t.result !== 'champion');
+const span = tournaments.at(-1).year - tournaments[0].year + 1;
+---
+
+<section class="rec on-light" id="basarilar" aria-labelledby="rec-title">
+  <div class="w">
+    <h2 class="title" id="rec-title" data-fade>
+      Başarılar. <span>{span} yılda {tournaments.length} turnuva: {tally.champion} şampiyonluk, {tally.final} final, {tally.semi} yarı final.</span>
+    </h2>
+
+    <ol class="champs">
+      {
+        champions.map((t, i) => (
+          <li class="champ" data-fade style={`--d:${i * 80}ms`}>
+            <div class="champ__logo">
+              <img src={`/img/t/${t.logo}.webp`} alt="" loading="lazy" decoding="async" />
+            </div>
+            <p class="champ__tag">{t.label}</p>
+            <h3 class="sub">{t.title}</h3>
+            <p class="champ__year">{t.year}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <ol class="list" data-fade>
+      {
+        rest.map((t) => (
+          <li class="row">
+            <span class="row__year">{t.year}</span>
+            <span class="row__logo">
+              <img src={`/img/t/${t.logo}.webp`} alt="" loading="lazy" decoding="async" />
+            </span>
+            <h3 class="row__name">
+              {t.title}
+              {t.partner && <span>{t.partner} ile</span>}
+            </h3>
+            <span class:list={['row__res', { 'row__res--final': t.result === 'final' }]}>{t.label}</span>
+          </li>
+        ))
+      }
+    </ol>
+
+    <blockquote>
+      <p>“Zafer, ‘zafer benimdir’ diyebilenindir. Başarı ise ‘başaracağım’ diye başlayarak sonunda ‘başardım’ diyenindir.”</p>
+    </blockquote>
+  </div>
+</section>
+
+<style>
+  .rec {
+    position: relative;
+    padding-block: var(--sec);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .rec .title {
+    max-width: 21em;
+    margin-bottom: clamp(32px, 4.6vw, 64px);
+  }
+
+  .champs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(12px, 1.6vw, 20px);
+    margin-bottom: clamp(12px, 1.6vw, 20px);
+  }
+
+  .champ {
+    display: flex;
+    flex-direction: column;
+    min-height: clamp(320px, 33vw, 420px);
+    padding: clamp(24px, 2.8vw, 36px);
+    border-radius: var(--r-l);
+    background: var(--white);
+  }
+
+  .champ__logo {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-height: 120px;
+    padding-bottom: 24px;
+  }
+
+  .champ__logo img {
+    max-width: min(100%, 196px);
+    max-height: 150px;
+    width: auto;
+    height: auto;
+  }
+
+  .champ__tag {
+    color: var(--amber-ink);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.008em;
+  }
+
+  .champ .sub {
+    margin-block: 3px 4px;
+  }
+
+  .champ__year {
+    color: var(--g4);
+  }
+
+  .list {
+    padding: 8px clamp(20px, 2.8vw, 36px);
+    border-radius: var(--r-l);
+    background: var(--white);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 3.75rem 56px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0 clamp(10px, 1.6vw, 20px);
+    min-height: 80px;
+    padding-block: 10px;
+  }
+
+  .row + .row {
+    border-top: 1px solid var(--g1);
+  }
+
+  .row__year {
+    color: var(--g4);
+  }
+
+  .row__logo {
+    display: grid;
+    place-items: center;
+    height: 52px;
+  }
+
+  .row__logo img {
+    max-width: 56px;
+    max-height: 52px;
+    width: auto;
+    height: auto;
+  }
+
+  .row__name {
+    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.016em;
+  }
+
+  .row__name span {
+    display: block;
+    margin-top: 1px;
+    color: var(--g4);
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: -0.003em;
+  }
+
+  .row__res {
+    padding: 5px 12px;
+    border-radius: 980px;
+    background: var(--g1);
+    color: var(--ink);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: -0.006em;
+    white-space: nowrap;
+  }
+
+  .row__res--final {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  blockquote {
+    max-width: 40em;
+    margin: clamp(32px, 4vw, 56px) auto 0;
+    color: var(--g4);
+    text-align: center;
+  }
+
+  @media (max-width: 860px) {
+    .champs {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .champ {
+      min-height: 0;
+    }
+
+    .champ__logo {
+      min-height: 0;
+    }
+
+    .champ__logo img {
+      max-height: 110px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .row {
+      grid-template-columns: 48px minmax(0, 1fr) auto;
+      grid-template-areas:
+        'logo name name'
+        'logo year res';
+      gap: 2px 12px;
+      min-height: 0;
+      padding-block: 14px;
+    }
+
+    .row__logo {
+      grid-area: logo;
+      height: 48px;
+      align-self: start;
+    }
+
+    .row__logo img {
+      max-width: 48px;
+      max-height: 46px;
+    }
+
+    .row__name {
+      grid-area: name;
+    }
+
+    .row__year {
+      grid-area: year;
+      align-self: center;
+      font-size: 0.9375rem;
+    }
+
+    .row__res {
+      grid-area: res;
+    }
+  }
+</style>

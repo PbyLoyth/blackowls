@@ -1,0 +1,449 @@
+---
+import Base from '../layouts/Base.astro';
+import ApplyButton from '../components/ApplyButton.astro';
+import ApplyNotice from '../components/ApplyNotice.astro';
+import { paths } from '../data/paths.js';
+import { site } from '../data/site.js';
+---
+
+<Base
+  theme="light"
+  title="Aramıza katıl | Black owLs"
+  description="Black owLs takımına veya topluluğuna başvur. Ne beklediğimiz, neleri hazırlaman gerektiği ve sürecin nasıl işlediği."
+>
+  <div class="apply on-light">
+    <div class="media" aria-hidden="true">
+      <div class="media__tile">
+        {
+          paths.map((p, i) => (
+            <img
+              src={`/img/owl-${p.icon}.webp`}
+              width="420"
+              height="560"
+              alt=""
+              data-media={p.id}
+              data-on={i === 0 ? '' : undefined}
+              decoding="async"
+            />
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="panel">
+      <h1 class="title">Aramıza katıl. <span>Hangi kapıdan giriyorsun?</span></h1>
+
+      <div class="opts" role="radiogroup" aria-label="Başvuru türü" data-opts>
+        {
+          paths.map((p, i) => (
+            <label class="opt">
+              <input type="radio" name="yol" value={p.id} checked={i === 0} />
+              <span class="opt__box">
+                <b>{p.name}</b>
+                <small>{p.kicker}</small>
+              </span>
+            </label>
+          ))
+        }
+      </div>
+
+      {
+        paths.map((p, i) => (
+          <section class="det" id={p.id} data-panel data-on={i === 0 ? '' : undefined} aria-label={p.name}>
+            <p class="det__sum intro">{p.summary}</p>
+
+            <ol class="ladder" aria-label={`${p.name} rütbeleri`}>
+              {p.ladder.map((rank) => (
+                <li>
+                  <img src={`/img/owl-${rank.color}.webp`} alt="" width="84" height="112" loading="lazy" decoding="async" />
+                  <b>{rank.name}</b>
+                  <span>{rank.note}</span>
+                </li>
+              ))}
+            </ol>
+
+            <div class="group">
+              <h2>Senden beklediğimiz</h2>
+              <ul class="ticks">{p.expect.map((item) => <li>{item}</li>)}</ul>
+            </div>
+
+            {p.gives && (
+              <div class="group">
+                <h2>Üye olunca</h2>
+                <ul class="ticks">{p.gives.map((item) => <li>{item}</li>)}</ul>
+              </div>
+            )}
+
+            <div class="group">
+              <h2>Forma girmeden hazırla</h2>
+              <ul class="ticks ticks--plain">{p.prepare.map((item) => <li>{item}</li>)}</ul>
+            </div>
+
+            <div class="group">
+              <h2>Sonra ne olur</h2>
+              <ol class="steps">{p.steps.map((item) => <li>{item}</li>)}</ol>
+            </div>
+
+            <div class="go">
+              <ApplyButton class="pill" form={p.form}>{p.cta}</ApplyButton>
+              <p class="cap">{p.questions} soruluk form</p>
+            </div>
+            <p class="note cap">{p.note}</p>
+          </section>
+        ))
+      }
+
+      <p class="help cap">
+        Takıldığın yer olursa <a href={site.discord} target="_blank" rel="noopener">Discord’dan</a> herhangi bir oyuncumuza yaz.
+      </p>
+    </div>
+  </div>
+  <ApplyNotice />
+</Base>
+
+<style>
+  .apply {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 72px);
+    width: min(100% - 2 * var(--gutter), 1320px);
+    margin-inline: auto;
+    padding-top: calc(var(--nav-h) + 20px);
+    padding-bottom: clamp(56px, 7vw, 96px);
+  }
+
+  .media {
+    position: sticky;
+    top: calc(var(--nav-h) + 20px);
+    align-self: start;
+    height: calc(100svh - var(--nav-h) - 40px);
+    min-height: 440px;
+  }
+
+  .media__tile {
+    position: relative;
+    height: 100%;
+    border-radius: var(--r-l);
+    background: var(--paper);
+    overflow: hidden;
+  }
+
+  .media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: clamp(28px, 7vh, 72px);
+    object-fit: contain;
+    opacity: 0;
+    transform: scale(0.97);
+    transition: opacity 420ms ease, transform 620ms var(--ease);
+  }
+
+  .media img[data-on] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .panel {
+    padding-top: clamp(12px, 4vw, 56px);
+    min-width: 0;
+  }
+
+  .panel .title {
+    font-size: clamp(2.25rem, 3.9vw, 3.5rem);
+    margin-bottom: 26px;
+  }
+
+  .opts {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .opt input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .opt__box {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 68px;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: inset 0 0 0 1px var(--g2);
+    cursor: pointer;
+    transition: box-shadow 160ms ease, transform 160ms var(--ease);
+  }
+
+  .opt__box:active {
+    transform: scale(0.99);
+  }
+
+  .opt b {
+    font-size: 1.1875rem;
+    font-weight: 600;
+    letter-spacing: -0.016em;
+  }
+
+  .opt small {
+    color: var(--g4);
+    font-size: 0.875rem;
+    text-align: right;
+  }
+
+  .opt input:checked + .opt__box {
+    box-shadow: inset 0 0 0 2px var(--amber-ink);
+  }
+
+  .opt input:focus-visible + .opt__box {
+    outline: 2px solid var(--amber-ink);
+    outline-offset: 3px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .opt__box:hover {
+      box-shadow: inset 0 0 0 1px var(--g3);
+    }
+
+    .opt input:checked + .opt__box:hover {
+      box-shadow: inset 0 0 0 2px var(--amber-ink);
+    }
+  }
+
+  :global(.js) .det:not([data-on]) {
+    display: none;
+  }
+
+  .det {
+    scroll-margin-top: calc(var(--nav-h) + 24px);
+  }
+
+  .det[data-on] {
+    animation: det-in 320ms var(--ease);
+  }
+
+  @keyframes det-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  .det__sum {
+    margin-bottom: 26px;
+  }
+
+  .ladder {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 28px;
+    padding: 16px;
+    border-radius: 18px;
+    background: var(--paper);
+  }
+
+  .ladder img {
+    width: 56px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .ladder b {
+    display: block;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .ladder span {
+    display: block;
+    margin-top: 1px;
+    color: var(--g4);
+    font-size: 0.8125rem;
+    line-height: 1.3;
+  }
+
+  .group {
+    padding-block: 18px;
+    border-top: 1px solid var(--g2);
+  }
+
+  .group h2 {
+    margin-bottom: 10px;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+  }
+
+  .ticks {
+    display: grid;
+    gap: 7px;
+  }
+
+  .ticks li {
+    position: relative;
+    padding-left: 1.55em;
+    line-height: 1.38;
+  }
+
+  .ticks li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.32em;
+    width: 0.62em;
+    height: 0.34em;
+    border-left: 1.8px solid var(--amber-ink);
+    border-bottom: 1.8px solid var(--amber-ink);
+    transform: rotate(-45deg);
+  }
+
+  .ticks--plain li::before {
+    top: 0.62em;
+    left: 3px;
+    width: 5px;
+    height: 5px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--g3);
+    transform: none;
+  }
+
+  .steps {
+    display: grid;
+    gap: 8px;
+    counter-reset: s;
+  }
+
+  .steps li {
+    position: relative;
+    counter-increment: s;
+    padding-left: 1.75em;
+    line-height: 1.38;
+  }
+
+  .steps li::before {
+    content: counter(s);
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    width: 1.3em;
+    height: 1.3em;
+    border-radius: 50%;
+    background: var(--g1);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.3em;
+    text-align: center;
+  }
+
+  .go {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    padding-top: 22px;
+    border-top: 1px solid var(--g2);
+  }
+
+  .go .pill {
+    min-height: 52px;
+    padding-inline: 28px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .go .cap {
+    color: var(--g4);
+  }
+
+  .note {
+    margin-top: 14px;
+    color: var(--g4);
+  }
+
+  .help {
+    margin-top: 28px;
+    color: var(--g4);
+  }
+
+  .help a {
+    color: var(--amber-ink);
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .go .pill:hover {
+      background: #333336;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .apply {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .media {
+      position: static;
+      height: min(52svh, 96vw);
+      min-height: 0;
+    }
+
+    .panel {
+      padding-top: 8px;
+    }
+
+    .go .pill {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .ladder {
+      gap: 6px;
+      padding: 12px;
+    }
+
+    .opt__box {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .opt small {
+      text-align: left;
+    }
+  }
+</style>
+
+<script>
+  const radios = [...document.querySelectorAll('[data-opts] input')];
+  const panels = [...document.querySelectorAll('[data-panel]')];
+  const media = [...document.querySelectorAll('[data-media]')];
+
+  const show = (id) => {
+    if (!panels.some((p) => p.id === id)) return;
+    panels.forEach((p) => p.toggleAttribute('data-on', p.id === id));
+    media.forEach((m) => m.toggleAttribute('data-on', m.dataset.media === id));
+    radios.forEach((r) => {
+      r.checked = r.value === id;
+    });
+  };
+
+  radios.forEach((r) => {
+    r.addEventListener('change', () => {
+      show(r.value);
+      history.replaceState(null, '', `#${r.value}`);
+    });
+  });
+
+  const fromHash = () => show(location.hash.slice(1));
+  addEventListener('hashchange', fromHash);
+  fromHash();
+</script>

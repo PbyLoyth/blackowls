@@ -1,0 +1,376 @@
+---
+---
+
+<div class="opening" data-opening>
+  <div class="stage" data-stage>
+    <div class="film" data-film-wrap>
+      <video data-reel data-poster="/media/reel.webp" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+        <source src="/media/reel.mp4" type="video/mp4" />
+      </video>
+      <div class="film__ui" data-film-ui>
+        <p>
+          <b>Sahadan.</b>
+          <button class="more" type="button" data-trailer>Fragmanın tamamı</button>
+        </p>
+        <button class="film__btn" type="button" data-film-toggle aria-label="Videoyu duraklat"><span></span></button>
+      </div>
+    </div>
+
+    <img
+      class="emblem"
+      data-emblem
+      src="/hero/emblem-1140.webp"
+      srcset="/hero/emblem-760.webp 760w, /hero/emblem-1140.webp 1140w, /hero/emblem-1423.webp 1423w"
+      sizes="(max-width: 700px) 120vw, 88vh"
+      width="1423"
+      height="1900"
+      alt="Black owLs amblemi: altın çerçeveli üçgen içinde amber gözlü baykuş"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <canvas class="gl" data-gl aria-hidden="true"></canvas>
+  </div>
+
+  <section class="hero" data-hero aria-labelledby="hero-title">
+    <p class="hero__name">Black owLs</p>
+    <h1 class="hero__title" id="hero-title">
+      <span class="sr">Black owLs. </span>
+      <span class="dim">Dün kurulmadık.</span>
+      <br />
+      <span>Yarın dağılmayacağız.</span>
+    </h1>
+    <p class="hero__sub intro">Sadece Türk oyunculardan oluşan bir kadroyla, 2018’den beri Squad sahnesinde.</p>
+    <div class="hero__cta">
+      <a class="pill" href="/basvuru">Aramıza katıl</a>
+      <button class="more" type="button" data-trailer>Fragmanı izle</button>
+    </div>
+  </section>
+
+  <div class="dive" data-dive-gap aria-hidden="true"></div>
+</div>
+
+<dialog class="movie" data-movie aria-label="Black owLs fragmanı">
+  <button class="movie__x" type="button" data-movie-close aria-label="Fragmanı kapat"></button>
+  <div class="movie__frame" data-movie-frame></div>
+</dialog>
+
+<style>
+  .opening {
+    position: relative;
+    background: var(--black);
+  }
+
+  .stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+    background: var(--black);
+  }
+
+  .film {
+    position: absolute;
+    inset: 0;
+    display: none;
+    background: var(--black);
+    will-change: clip-path;
+  }
+
+  :global(.gl) .film {
+    display: block;
+  }
+
+  .film video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+  }
+
+  .film__ui {
+    position: absolute;
+    inset: auto 0 0;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    padding: clamp(40px, 8vh, 96px) max(var(--gutter), calc(50% - 580px)) clamp(16px, 3vh, 32px);
+    background: linear-gradient(to top, rgb(0 0 0 / 0.56), rgb(0 0 0 / 0));
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .film__ui[data-on] {
+    pointer-events: auto;
+  }
+
+  .film__ui p {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 14px;
+  }
+
+  .film__ui b {
+    font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+    font-weight: 600;
+    letter-spacing: -0.022em;
+  }
+
+  .film__btn {
+    position: relative;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.18);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    backdrop-filter: saturate(180%) blur(16px);
+    transition: background-color 160ms ease, transform 160ms var(--ease);
+  }
+
+  .film__btn:active {
+    transform: scale(0.94);
+  }
+
+  .film__btn span,
+  .film__btn span::after {
+    position: absolute;
+    top: 15px;
+    height: 14px;
+    width: 4px;
+    border-radius: 1px;
+    background: var(--paper);
+  }
+
+  .film__btn span {
+    left: 16px;
+  }
+
+  .film__btn span::after {
+    content: '';
+    top: 0;
+    left: 8px;
+  }
+
+  .film__btn[data-paused] span {
+    left: 18px;
+    width: 0;
+    height: 0;
+    border-radius: 0;
+    background: none;
+    border-block: 7px solid transparent;
+    border-left: 12px solid var(--paper);
+  }
+
+  .film__btn[data-paused] span::after {
+    display: none;
+  }
+
+  .emblem {
+    position: absolute;
+    left: 50%;
+    top: 55.5svh;
+    height: min(112svh, 160vw);
+    width: auto;
+    max-width: none;
+    transform: translateX(-50%);
+  }
+
+  :global(.gl) .emblem {
+    opacity: 0;
+  }
+
+  :global(.no-gl) .emblem {
+    opacity: 1;
+  }
+
+  .gl {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  :global(html:not(.gl)) .gl {
+    display: none;
+  }
+
+  .hero {
+    position: relative;
+    z-index: 2;
+    margin-top: -100svh;
+    height: 100svh;
+    padding: calc(var(--nav-h) + clamp(28px, 6.4svh, 72px)) var(--gutter) 0;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .hero a,
+  .hero button {
+    pointer-events: auto;
+  }
+
+  .hero__name {
+    margin-bottom: 10px;
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .hero__title {
+    font-size: clamp(2.75rem, min(6.5vw, 11svh), 6.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.032em;
+    font-weight: 600;
+  }
+
+  .dim {
+    color: var(--g3);
+  }
+
+  .hero__sub {
+    max-width: 34rem;
+    margin: clamp(12px, 2svh, 20px) auto clamp(14px, 2.4svh, 24px);
+    color: var(--g2);
+  }
+
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 24px;
+  }
+
+  /* Metin ve amblem aynı anda belirir, gözler ilk yanar */
+  .hero > * {
+    animation: rise 1000ms var(--ease) both;
+  }
+
+  .hero__title {
+    animation-delay: 60ms;
+  }
+
+  .hero__sub {
+    animation-delay: 130ms;
+  }
+
+  .hero__cta {
+    animation-delay: 190ms;
+  }
+
+  /* 0,01 opaklık: metin ilk karede boyanmış sayılır, LCP gecikmez */
+  @keyframes rise {
+    from {
+      opacity: 0.01;
+      transform: translateY(18px);
+    }
+  }
+
+  .dive {
+    display: none;
+  }
+
+  :global(.gl) .dive {
+    display: block;
+    height: 200svh;
+  }
+
+  .movie {
+    width: min(1160px, calc(100vw - 2 * var(--gutter)));
+    max-width: none;
+    padding: 0;
+    border: 0;
+    border-radius: var(--r-m);
+    background: var(--black);
+    overflow: visible;
+  }
+
+  .movie::backdrop {
+    background: rgb(0 0 0 / 0.84);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .movie[open] {
+    animation: movie-in 260ms var(--ease);
+  }
+
+  @keyframes movie-in {
+    from {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+  }
+
+  .movie__frame {
+    aspect-ratio: 16 / 9;
+    border-radius: var(--r-m);
+    overflow: hidden;
+  }
+
+  .movie__frame :global(iframe) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .movie__x {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 8px);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.18);
+  }
+
+  .movie__x::before,
+  .movie__x::after {
+    content: '';
+    position: absolute;
+    left: 11px;
+    right: 11px;
+    top: 17px;
+    height: 1.5px;
+    background: var(--paper);
+    transform: rotate(45deg);
+  }
+
+  .movie__x::after {
+    transform: rotate(-45deg);
+  }
+
+  @media (max-width: 640px) {
+    .hero__title {
+      font-size: clamp(2.5rem, 11.4vw, 3.5rem);
+    }
+
+    .emblem {
+      top: 56svh;
+    }
+  }
+</style>
+
+<script>
+  const movie = document.querySelector('[data-movie]');
+  const frame = document.querySelector('[data-movie-frame]');
+  document.querySelectorAll('[data-trailer]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      frame.innerHTML =
+        '<iframe src="https://www.youtube-nocookie.com/embed/XfJU8fCtORo?autoplay=1&rel=0" title="Black owLs fragmanı" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+      movie.showModal();
+    });
+  });
+  document.querySelector('[data-movie-close]')?.addEventListener('click', () => movie.close());
+  movie?.addEventListener('click', (ev) => {
+    if (ev.target === movie) movie.close();
+  });
+  movie?.addEventListener('close', () => {
+    frame.innerHTML = '';
+  });
+</script>

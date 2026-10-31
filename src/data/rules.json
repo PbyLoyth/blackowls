@@ -1,0 +1,342 @@
+{
+  "preface": [
+    "Sunucumuzda oyun oynayan herkes kuralları okumuş, kabul etmiş olarak varsayılır.",
+    "İstisnai durumlarda, adminler, kural listesini referans alarak eylemde bulunurlar."
+  ],
+  "sections": [
+    {
+      "id": "temel",
+      "title": "TEMEL KURAL",
+      "intro": [],
+      "rules": [
+        {
+          "id": "0",
+          "title": "",
+          "text": [
+            "Sunucudaki temel ve en önemli kural oyun kalitesine dikkat etmektir. Bütün adminlerimiz oyun kalitesini korumak için insiyatif kullanabilirler ve birazdan okuyacağınız kural grubunda bulunmayan eylemlerde bulunabilirler. Benzer şekilde, kurallara aykırı hareket edip oyun kalitesini destekliyorsanız bir ceza almazsınız."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "title": "GENEL KURALLAR",
+      "intro": [],
+      "rules": [
+        {
+          "id": "1.1",
+          "title": "",
+          "text": [
+            "Küfür, hakaret ve toxic tavırlardan kaçının."
+          ]
+        },
+        {
+          "id": "1.2",
+          "title": "",
+          "text": [
+            "Round başlarında Local (V) Mic kullanmaktan kaçının. Squadlar arası ve Squad içi iletişime zarar veriyorsunuz. Müzik spam vs yapmayınız."
+          ]
+        },
+        {
+          "id": "1.3",
+          "title": "",
+          "text": [
+            "Ticket ve Araç vb israfı yapmayınız. Kafes sunucusunda acemi oyuncular hoş karşılanmaz. Kendinizi geliştirmek için KAOS sunucusunu tercih edebilirsiniz."
+          ]
+        },
+        {
+          "id": "1.4",
+          "title": "",
+          "text": [
+            "All-Chatten doğru veya yanlış bilgi paylaşımı yasaktır. Evet, rakibi yanıltmak amacıyla da yasak.",
+            "Ek olarak: Karşı tarafa \"GG\" yazmak ve veya ima etmek ghosting olarak değerlendirilebilir.",
+            "1 ticket ile biten maçlar oluyor. Dikkatli olunuz."
+          ]
+        },
+        {
+          "id": "1.5",
+          "title": "",
+          "text": [
+            "Teamkill konusunda hassasız. Sürekli TK atarsanız, yanlışlıkla bile olsa ban yersiniz. TK sonrası ALL-CHAT üzerinden \"Sorry TK\" yazmazsanız otomatik ceza alabilirsiniz."
+          ]
+        },
+        {
+          "id": "1.6",
+          "title": "",
+          "text": [
+            "Takım değiştirme (!switch) komutu sadece round başlarında (ilk 5 dakika) veya sunucuya bağlandıktan sonra (ilk 3 dakika) atılabilir.",
+            "İki taraf arasında max 2 oyuncu fark olabilir. [Örn: 49 vs 51]",
+            "Ek olarak: Adminlerden sürekli switch talebinde bulunmayınız."
+          ]
+        },
+        {
+          "id": "1.7",
+          "title": "",
+          "text": [
+            "Hile, Macro, Script ve Config, Bug/Glitch kullanımı yasaktır."
+          ]
+        },
+        {
+          "id": "1.8",
+          "title": "",
+          "text": [
+            "Ban yerseniz farklı bir hesapla oynamaya çalışmayın. Perma ban yersiniz.",
+            "Bir oyuncu, aynı sunucuda birden fazla hesapla oyun oynamamalıdır. Her oyuncu yalnızca tek bir hesapla katılım göstermeli, düzenli çoklu hesap kullanımı kesinlikle yasaktır."
+          ]
+        },
+        {
+          "id": "1.9",
+          "title": "",
+          "text": [
+            "Yetkililerde gördüğünüz hataları oyun içinden değil, discord üzerinden üst yönetime bildirmeniz çok daha etkili ve verimli olacaktır."
+          ]
+        },
+        {
+          "id": "1.10",
+          "title": "",
+          "text": [
+            "Sunucuda reklam yasaktır."
+          ]
+        },
+        {
+          "id": "1.11",
+          "title": "",
+          "text": [
+            "Unarmed(sivil-silahsız) rolü almak yasaktır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "SQUAD LEADER KURALLARI",
+      "intro": [
+        "Sunucumuzda oyun bilen Squad lider sayısını arttırmayı ve bu oyunculara konfor sunmayı amaçlıyoruz."
+      ],
+      "rules": [
+        {
+          "id": "2.1",
+          "title": "",
+          "text": [
+            "Bütün SL'ler her zaman SL kiti ile oynamalı, mikrofon kullanmalı ve Türkçe konuşmalıdır.",
+            "SL olmak sorumluluk gerektirir. Yönet(e)meyeceğiniz mangayı kurmayın."
+          ]
+        },
+        {
+          "id": "2.2",
+          "title": "",
+          "text": [
+            "Squad kurup devretmek yasaktır.",
+            "♦ ‘Rol & Kit kapmak niyetiyle’",
+            "♦ Başlangıçta “kimse açmadı yaw” diyerek öylesine squad kurmak yüksek ihtimalle ban ile sonuçlanacaktır.",
+            "♦ İsteğiniz dışında size kalan bir manga varsa, ismine sağ tıklayarak mangayı dağıtınız."
+          ]
+        },
+        {
+          "id": "2.3",
+          "title": "",
+          "text": [
+            "Piyade squadları aktif objektiflere oynamalıdır. Squad liderler olarak bunun olmasını sağlamalısınız. (Örnek objektifler: Savunma ve Saldırı bayrağı, Mortar-TOW-FOB, oyun başı ilk caplere Rush vb.)",
+            "Ek olarak: Rush atıp başarısız olan squadlar aktif bayrağa geri dönmelidir."
+          ]
+        },
+        {
+          "id": "2.4",
+          "title": "",
+          "text": [
+            "Mangadan herhangi bir oyuncuya kick atarken geçerli bir sebep belirtilmelidir."
+          ]
+        },
+        {
+          "id": "2.5",
+          "title": "",
+          "text": [
+            "Piyade Squadları en az 4 kişi ile kilitlenebilir."
+          ]
+        },
+        {
+          "id": "2.6",
+          "title": "",
+          "text": [
+            "Araç squadları CMD-Commander rolü alamazlar."
+          ]
+        },
+        {
+          "id": "2.7",
+          "title": "",
+          "text": [
+            "SL'ler mainden çıkmasına izin verdiği tüm araçlardan sorumludur. Araç israfı meydana geldiğinde izin veren SL de ceza alabilir. Araç onaylamadan önce 2 kere düşünün ve sorgulayın."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "ARAÇ KURALLARI",
+      "intro": [],
+      "rules": [
+        {
+          "id": "3.1",
+          "title": "",
+          "text": [
+            "Araç squadları sahiplenecekleri aracın tam ismi ile squadı kurmalıdır. Yanlış veya eksik yazılmış isimle açılan squadlar aracı sahiplenme hakkını kaybeder.",
+            "UYARI: Oyun başlamadan konsol ile zırhlı squadı açmak yasaktır."
+          ]
+        },
+        {
+          "id": "3.2",
+          "title": "",
+          "text": [
+            "Claimlenen araçlar 3 dakika içerisinde belirlenen minimum oyuncu sayısı ile mainden çıkarılmalıdır. Bu süre dolduğunda araç üzerindeki kullanım hakkını (claim) kaybeder."
+          ]
+        },
+        {
+          "id": "3.3",
+          "title": "",
+          "text": [
+            "Crewman gerektiren tüm araçlar tam ismi ile squadı açılıp, her zaman, en az 2 crewman ile kullanılmalıdır. En fazla 4 kişi olabilirler."
+          ]
+        },
+        {
+          "id": "3.4",
+          "title": "",
+          "text": [
+            "Heli squadları üçten fazla kişi barındıramaz. Combat/Sapper/Engineer hariç Özel kit alamazlar."
+          ]
+        },
+        {
+          "id": "3.5",
+          "title": "",
+          "text": [
+            "Birden fazla araç alan squadlar eğer araçsız piyade mangası varsa araçlarından birini vermelidir. Hafif zırhlı araçlar da piyade mangası önceliklidir. Tank beklerken insanları araçsız bırakmayınız."
+          ]
+        },
+        {
+          "id": "3.6",
+          "title": "",
+          "text": [
+            "Acemi oyuncuların zırhlı squadı kurması ve heli pilotluğu yapması yasaktır. “Driverım kötü yaw” savunmanız pek işe yaramaz.",
+            "KAOS adlı sunucumuzda veya SEED zamanlarında deneyim elde edebilirsiniz."
+          ]
+        },
+        {
+          "id": "3.7",
+          "title": "",
+          "text": [
+            "Helikopterleri düşmanların üzerine RAM'lemek/Kamikaze yasaktır. Kuyruk ve veya pervane almak da heli ram olarak değerlendirilir."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "MAİN CAMP KURALLARI",
+      "intro": [],
+      "rules": [
+        {
+          "id": "4.1",
+          "title": "",
+          "text": [
+            "Main Camp sınırı genellikle 300 m'dir. (FOB Creation Mark)",
+            "Rakibin son bayrağına kadar aldıysanız main sınırı yoktur.",
+            "Main'e dönen araçları kovalarken main sınırı yoktur."
+          ]
+        },
+        {
+          "id": "4.2",
+          "title": "",
+          "text": [
+            "Rakibin tüm main çıkış yollarını tutmak ve hepsine mayın kurmak yasaktır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "SUPPORT SQUAD KURALLARI",
+      "intro": [],
+      "rules": [
+        {
+          "id": "5.1",
+          "title": "",
+          "text": [
+            "Mortar ve TOW squadları en az 2 en fazla 3 kişi olabilir ve özel kit kullanamazlar. (HAT, MG, Combat Engineer, Sniper)"
+          ]
+        },
+        {
+          "id": "5.2",
+          "title": "",
+          "text": [
+            "Mortar ve TOW squadları ayrı şekilde açılmalıdır."
+          ]
+        },
+        {
+          "id": "5.3",
+          "title": "",
+          "text": [
+            "Tek FOB’un izin verdiğinden fazla TOW/Mortar kurmayınız. Birden fazla Radyoda aynı anda TOW/Mortar kullanılamaz."
+          ]
+        },
+        {
+          "id": "5.4",
+          "title": "",
+          "text": [
+            "Mortar ve TOW mangasının olmadığı bir durumda herkes TOW/Mortar inşa ederek kullanabilir."
+          ]
+        },
+        {
+          "id": "5.5",
+          "title": "SuperFOB",
+          "text": [
+            "5.5a: SuperFOB squadı en fazla 5 kişi olabilir ve sadece Invasion modunda açılabilir. 9 kişi arka bayraklarda kazma kürek yapsın istemeyiz. Aktif bayraktaki kişi sayısını azaltmayınız.",
+            "5.5b: SuperFOB aktif savunma bayrağının en fazla 2 bayrak gerisine kurulabilir.",
+            "5.5c: SuperFOB squadı SADECE Sapper/Combat Engineer özel kit alabilir. Marksman, HAT, GL vb özel kitleri kilitlemeleri yasaktır. Aktif bayraktaki piyadelere bırakın.",
+            "5.5d: Logistic kamyonu kendi malınız gibi kullanmayın. Oyun ihtiyaçları doğrultusunda maine götürün veya diğer squadlara paslayınız."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "SEED KURALLARI",
+      "intro": [],
+      "rules": [
+        {
+          "id": "6.1",
+          "title": "",
+          "text": [
+            "Seed yapmanın amacı sunucuyu doldurmak. Bunun farkında olarak, rakip oyuncuları oyundan soğutacak eylemlerden uzak durunuz. GL, Anti Tank spam vb. uyanıklıklardan ve ucuz hareketlerden kaçınınız."
+          ]
+        },
+        {
+          "id": "6.2",
+          "title": "",
+          "text": [
+            "Jensen's Range haritasında Helipad bloklamak yasaktır."
+          ]
+        },
+        {
+          "id": "6.3",
+          "title": "",
+          "text": [
+            "Jensen's Range haritasında kurulabilir (HMG, TOW vs.) yapı spamlamak yasaktır. Seed süresince FOB (Radyo) kurmak yasaktır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "yayinci",
+      "title": "YAYINCI KURALI",
+      "intro": [],
+      "rules": [
+        {
+          "id": "yayinci",
+          "title": "",
+          "text": [
+            "Sunucumuzda düzenli, sürekli yayın yapmak isteyen kişilerin yönetimle iletişime geçmesi gerekmektedir. İçerik üretimini destekliyoruz, dikkat edilmesi gereken noktalar mevcuttur."
+          ]
+        }
+      ]
+    }
+  ]
+}

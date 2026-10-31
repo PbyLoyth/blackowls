@@ -1,0 +1,18 @@
+---
+const { to } = Astro.props;
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Yönlendiriliyor</title>
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0;url=${to}`} />
+    <link rel="canonical" href={to} />
+    <script is:inline define:vars={{ to }}>location.replace(to);</script>
+  </head>
+  <body>
+    <a href={to}>Devam et</a>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Harita dışına çıktın | Black owLs" noindex>
+  <section class="oob">
+    <img src="/img/owl-black.webp" width="168" height="224" alt="" />
+    <h1 class="title">Harita dışına çıktın. <span>Bu karede devriye yok.</span></h1>
+    <div class="oob__cta">
+      <a class="pill" href="/">Ana sayfaya dön</a>
+      <a class="more" href="/kurallar">Kurallar</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .oob {
+    min-height: 100svh;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 22px;
+    padding: calc(var(--nav-h) + 24px) var(--gutter) 48px;
+    text-align: center;
+  }
+
+  .title {
+    max-width: 14em;
+  }
+
+  .oob__cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px 22px;
+  }
+</style>

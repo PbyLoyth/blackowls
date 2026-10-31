@@ -1,0 +1,96 @@
+---
+import { tools } from '../data/site.js';
+
+const icons = {
+  Stats: 'M4 20V10M10 20V4M16 20v-7M22 20H2',
+  Taktik: 'M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3zM9 3v15M15 6v15',
+  Maps: 'M12 21s7-6.2 7-11.4A7 7 0 0 0 5 9.6C5 14.8 12 21 12 21zM12 12a2.4 2.4 0 1 0 0-4.8 2.4 2.4 0 0 0 0 4.8z',
+  Mortar: 'M12 3v4M12 17v4M3 12h4M17 12h4M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 12h.01',
+};
+---
+
+<section class="kit on-light" aria-labelledby="kit-title">
+  <div class="w">
+    <h2 class="title" id="kit-title" data-fade>Araçlar. <span>Maçtan önce, maçtan sonra.</span></h2>
+    <ul class="kit__grid">
+      {
+        tools.map((t, i) => (
+          <li data-fade style={`--d:${i * 60}ms`}>
+            <a href={t.href} target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d={icons[t.label]} /></svg>
+              <h3>{t.label}</h3>
+              <p>{t.note}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .kit {
+    padding-block: var(--sec);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .kit .title {
+    margin-bottom: clamp(28px, 4vw, 56px);
+  }
+
+  .kit__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(12px, 1.6vw, 20px);
+  }
+
+  .kit__grid a {
+    display: block;
+    height: 100%;
+    padding: 24px;
+    border-radius: var(--r-m);
+    background: var(--white);
+    transition: transform 320ms var(--ease), box-shadow 320ms var(--ease);
+  }
+
+  .kit__grid a:active {
+    transform: scale(0.985);
+  }
+
+  svg {
+    margin-bottom: 26px;
+    fill: none;
+    stroke: var(--amber-ink);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  h3 {
+    font-size: 1.3125rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+  }
+
+  p {
+    margin-top: 2px;
+    color: var(--g4);
+    font-size: 0.9375rem;
+    line-height: 1.34;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .kit__grid a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgb(0 0 0 / 0.08);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .kit__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

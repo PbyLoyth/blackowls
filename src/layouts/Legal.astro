@@ -1,0 +1,65 @@
+---
+import Base from './Base.astro';
+const { title, heading } = Astro.props;
+---
+
+<Base theme="light" title={`${title} | Black owLs`} description={`Black owLs ${title.toLocaleLowerCase('tr')} metni.`}>
+  <article class="legal on-light">
+    <h1 class="title">{heading ?? title}</h1>
+    <div class="legal__body">
+      <slot />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .legal {
+    width: min(100% - 2 * var(--gutter), 44rem);
+    margin-inline: auto;
+    padding-block: calc(var(--nav-h) + clamp(36px, 6vw, 80px)) clamp(64px, 8vw, 112px);
+  }
+
+  h1 {
+    margin-bottom: 28px;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+  }
+
+  .legal__body {
+    display: grid;
+    gap: 14px;
+    color: var(--ink);
+  }
+
+  .legal__body :global(h2) {
+    margin-top: 18px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.014em;
+  }
+
+  .legal__body :global(a) {
+    color: var(--amber-ink);
+  }
+
+  .legal__body :global(ul) {
+    display: grid;
+    gap: 6px;
+  }
+
+  .legal__body :global(li) {
+    position: relative;
+    padding-left: 1em;
+  }
+
+  .legal__body :global(li)::before {
+    content: '';
+    position: absolute;
+    left: 1px;
+    top: 0.62em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--g3);
+  }
+</style>

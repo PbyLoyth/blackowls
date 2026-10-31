@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="260px" height="260px" viewBox="0 0 260 260" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>Builder Owl</title>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(30, 20)">
+            <!-- Hard Hat -->
+            <path d="M100,40 C140,40 170,70 170,110 L30,110 C30,70 60,40 100,40" fill="#FFC843" stroke="#000000" stroke-width="3"/>
+            <path d="M30,100 C30,100 40,95 100,95 C160,95 170,100 170,100 L170,110 L30,110 L30,100" fill="#DDA93B" stroke="#000000" stroke-width="2"/>
+            
+            <!-- Owl Body -->
+            <ellipse cx="100" cy="150" rx="60" ry="70" fill="#333333" stroke="#000000" stroke-width="3"/>
+            
+            <!-- Eyes -->
+            <circle cx="75" cy="130" r="20" fill="white" stroke="#000000" stroke-width="2"/>
+            <circle cx="125" cy="130" r="20" fill="white" stroke="#000000" stroke-width="2"/>
+            <circle cx="75" cy="130" r="10" fill="#000000"/>
+            <circle cx="125" cy="130" r="10" fill="#000000"/>
+            <circle cx="72" cy="127" r="3" fill="white"/>
+            <circle cx="122" cy="127" r="3" fill="white"/>
+            
+            <!-- Beak -->
+            <path d="M90,155 L110,155 L100,170 Z" fill="#C8A35F" stroke="#000000" stroke-width="2"/>
+            
+            <!-- Wings -->
+            <path d="M40,150 C20,130 20,170 40,170 L60,170 L60,130 L40,150" fill="#444444" stroke="#000000" stroke-width="2"/>
+            <path d="M160,150 C180,130 180,170 160,170 L140,170 L140,130 L160,150" fill="#444444" stroke="#000000" stroke-width="2"/>
+            
+            <!-- Construction Tools -->
+            <rect x="170" y="140" width="40" height="10" rx="2" fill="#C8A35F" stroke="#000000" stroke-width="2" transform="rotate(30 190 145)"/>
+            <rect x="0" y="140" width="40" height="5" rx="2" fill="#888888" stroke="#000000" stroke-width="2" transform="rotate(-20 10 145)"/>
+            
+            <!-- Blueprints -->
+            <rect x="70" y="180" width="60" height="40" rx="2" fill="#DDDDFF" stroke="#000000" stroke-width="2"/>
+            <line x1="80" y1="190" x2="120" y2="190" stroke="#0000AA" stroke-width="1"/>
+            <line x1="80" y1="200" x2="120" y2="200" stroke="#0000AA" stroke-width="1"/>
+            <line x1="80" y1="210" x2="100" y2="210" stroke="#0000AA" stroke-width="1"/>
+        </g>
+    </g>
+    <style>
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+        
+        g {
+            animation: bounce 2s infinite ease-in-out;
+        }
+    </style>
+</svg>
