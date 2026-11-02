@@ -1,11 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import rules from '../data/rules.json';
+import ruleFixes from '../data/rule-fixes.json';
 import { site } from '../data/site.js';
 
 const DOC =
   'https://docs.google.com/document/d/e/2PACX-1vTjHH_yAUyJEJMaHeyV1b_HGQgW3ocWeTbM685GFQRPw9lVqaNvldKYisPtdFfTXxeQKzrgHdTCSlr5/pub';
 
+// Belgedeki yazım düzeltmeleri, satır belgede değişirse özgün metin görünür
+const fix = (line) => ruleFixes[line] ?? line;
 const anchor = (id) => `k${String(id).replace('.', '-')}`;
 const sentence = (s) => {
   const low = s.toLocaleLowerCase('tr');
@@ -15,7 +18,7 @@ const heading = (s) => sentence(s).replace('Squad leader', 'Squad Leader').repla
 
 const lineKind = (line) => {
   if (line.startsWith('♦')) return 'item';
-  if (/^(Ek olarak:|UYARI:)/.test(line)) return 'note';
+  if (/^(Ek olarak:|Uyarı:)/.test(line)) return 'note';
   return 'text';
 };
 
@@ -24,12 +27,12 @@ const total = rules.sections.reduce((n, s) => n + s.rules.length, 0);
 
 <Base
   theme="light"
-  title="KAFES sunucu kuralları | Black owLs"
-  description="Black owLs KAFES Squad sunucusunun güncel kuralları: genel, Squad Leader, araç, main camp, support ve seed kuralları."
+  title="Kafes sunucu kuralları | Black owLs"
+  description="Black owLs Kafes Squad sunucusunun güncel kuralları: genel, Squad Leader, araç, main camp, support ve seed kuralları."
 >
   <div class="page on-light">
     <header class="head">
-      <h1 class="title">Kurallar. <span>KAFES’te oynayan herkes bunları okumuş sayılır.</span></h1>
+      <h1 class="title">Kurallar. <span>Kafes’te oynayan herkes bunları okumuş sayılır.</span></h1>
       <p class="head__server cap">{site.server.name}</p>
       <p class="head__state"><i aria-hidden="true"></i>{site.server.status}</p>
     </header>
@@ -51,13 +54,13 @@ const total = rules.sections.reduce((n, s) => n + s.rules.length, 0);
       </aside>
 
       <article class="body">
-        {rules.preface.map((line) => <p class="preface">{line}</p>)}
+        {rules.preface.map((line) => <p class="preface">{fix(line)}</p>)}
 
         {
           rules.sections.map((s) => (
             <section class="sec" id={`b-${s.id}`} data-rule-section>
               <h2 class="sub">{heading(s.title)}</h2>
-              {s.intro.map((line) => <p class="sec__intro">{line}</p>)}
+              {s.intro.map((line) => <p class="sec__intro">{fix(line)}</p>)}
               <ol class="list">
                 {s.rules.map((r) => (
                   <li class="rule" id={anchor(r.id)} data-rule>
@@ -66,7 +69,7 @@ const total = rules.sections.reduce((n, s) => n + s.rules.length, 0);
                     </a>
                     <div class="rule__body">
                       {r.title && <h3>{r.title}</h3>}
-                      {r.text.map((line) => {
+                      {r.text.map(fix).map((line) => {
                         const kind = lineKind(line);
                         const clean = line.replace(/^♦\s*/, '');
                         if (kind === 'item') return <p class="is-item">{clean}</p>;
@@ -189,6 +192,11 @@ const total = rules.sections.reduce((n, s) => n + s.rules.length, 0);
     padding: 5px 2px;
     color: var(--g4);
     transition: color 140ms ease;
+  }
+
+  .side li a[aria-current='true'] {
+    color: var(--ink);
+    font-weight: 600;
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -345,6 +353,20 @@ const total = rules.sections.reduce((n, s) => n + s.rules.length, 0);
     count.textContent = q ? `${total} kuraldan ${hits} eşleşme` : `${total} kural`;
     empty.hidden = hits > 0;
   });
+
+  // Yan menüde o an okunan bölüm işaretlenir
+  const links = new Map(
+    [...document.querySelectorAll('.side li a')].map((a) => [a.getAttribute('href').split(/[#/]/).pop(), a]),
+  );
+  const spy = new IntersectionObserver(
+    (entries) => {
+      for (const en of entries) {
+        if (en.isIntersecting) links.forEach((a, id) => a.setAttribute('aria-current', String(id === en.target.id)));
+      }
+    },
+    { rootMargin: '-30% 0px -65% 0px' },
+  );
+  sections.forEach((s) => spy.observe(s));
 
   // Adminler için: kural numarasına tıklayınca doğrudan bağlantı kopyalanır
   document.querySelectorAll('[data-rule-link]').forEach((a) => {

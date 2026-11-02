@@ -80,18 +80,24 @@ if (gallery) {
     });
   };
 
+  const fetchClip = (v) => {
+    if (v.preload !== 'auto') {
+      v.preload = 'auto';
+      v.load();
+    }
+  };
+
   const sync = () => {
     videos.forEach((v, i) => {
       if (i === index && inView && !paused) {
-        if (v.preload !== 'auto') {
-          v.preload = 'auto';
-          v.load();
-        }
+        fetchClip(v);
         v.play().catch(() => {});
       } else if (!v.paused) {
         v.pause();
       }
     });
+    // Sonraki kare hazır beklesin, geçişte siyah ekran görünmesin
+    if (inView && !paused) fetchClip(videos[(index + 1) % videos.length]);
   };
 
   const go = (i, smooth = true) => {
@@ -116,6 +122,14 @@ if (gallery) {
   });
 
   dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+
+  track.addEventListener('keydown', (ev) => {
+    const step = { ArrowRight: 1, ArrowLeft: -1 }[ev.key];
+    if (step) {
+      ev.preventDefault();
+      go(index + step);
+    }
+  });
 
   toggle.toggleAttribute('data-paused', paused);
   toggle.addEventListener('click', () => {
@@ -178,11 +192,28 @@ if (names && cursor && matchMedia('(hover: hover) and (pointer: fine)').matches)
       pos.y = pos.ty;
       cursor.setAttribute('data-on', '');
     }
-    label.textContent = li.querySelector('span').textContent;
+    label.textContent = `owL | ${li.querySelector('span').textContent}`;
     if (!pos.raf) pos.raf = requestAnimationFrame(tick);
   });
   names.addEventListener('pointerleave', () => cursor.removeAttribute('data-on'));
 }
+
+// Menüde o an okunan bölüm işaretlenir
+const navLinks = new Map(
+  [...document.querySelectorAll('.links > a')]
+    .map((a) => [a.getAttribute('href').split(/[#/]/).pop(), a])
+    .filter(([id]) => document.getElementById(id)),
+);
+const spy = new IntersectionObserver(
+  (entries) => {
+    for (const en of entries) {
+      if (en.isIntersecting) navLinks.forEach((a, id) => a.setAttribute('aria-current', String(id === en.target.id)));
+      else navLinks.get(en.target.id)?.removeAttribute('aria-current');
+    }
+  },
+  { rootMargin: '-45% 0px -50% 0px' },
+);
+navLinks.forEach((_, id) => spy.observe(document.getElementById(id)));
 
 // Canlı Discord sayıları; başarısızsa build anındaki değer kalır
 async function refreshDiscord() {

@@ -6,7 +6,7 @@ Tarih: 1 Kasım 2026. Ölçümler 412×915 mobil, Fast 4G, 4x CPU kısıtıyla a
 
 | Ölçüt | Eski site | Yeni site |
 | --- | --- | --- |
-| İlk yükleme | 8,09 MB, 29 istek | 298 KB, 12 istek |
+| İlk yükleme | 8,09 MB, 29 istek | 300 KB, 12 istek |
 | Gerçek içeriğin gelişi | Zorunlu 2,5 sn "Loading" ekranından sonra | İlk boyamada |
 | LCP | 2,16 sn (yükleme ekranı) | 1,39 sn |
 | CLS | 0,00 | 0,00 |
@@ -19,7 +19,7 @@ Tarih: 1 Kasım 2026. Ölçümler 412×915 mobil, Fast 4G, 4x CPU kısıtıyla a
 
 Yeni sitedeki Lighthouse puanları ana sayfa, başvuru, kurallar ve üç yasal sayfada aynı. 404 sayfasının SEO puanı `noindex` nedeniyle 69, bu bilerek böyle.
 
-Video (ana döngü 3,2 MB, galeri klipleri 160-780 KB) yalnızca kullanıcı kaydırınca iner, ilk yükleme hesabına girmez. Eski sitede ilk görüntüdeki aynı PNG üç farklı adresten üç kez iniyordu (`background.png`, `owl-logo.png`, `static/media/background...png`, her biri 2,7 MB).
+Videolar 1440p60 fragmandan üretilir: masaüstünde 1080p (ana döngü 11,3 MB, klipler 0,8-4,7 MB), telefonda 720p (ana döngü 4,6 MB, klipler 0,3-1,5 MB). Yalnızca kullanıcı kaydırınca iner, ilk yükleme hesabına girmez. Eski sitede ilk görüntüdeki aynı PNG üç farklı adresten üç kez iniyordu (`background.png`, `owl-logo.png`, `static/media/background...png`, her biri 2,7 MB).
 
 ## Eski sitede bulunanlar
 
@@ -66,12 +66,12 @@ Video (ana döngü 3,2 MB, galeri klipleri 160-780 KB) yalnızca kullanıcı kay
 
 - Tasarım dili: Apple ürün sayfası. Siyah zemin, iki tonlu başlık, hap düğmeler, öne çıkanlar galerisi, "Sana hangisi uygun?" karşılaştırması.
 - Figma dokunuşu: kadro üzerinde çok oyunculu imleç etiketi ve aynı sistemin Figma dosyası.
-- Açılış: amblem karanlıktan gözleriyle çıkar, gözler imleci izler, kaydırınca göz bebeği genişleyip maç görüntüsüne açılır.
+- Açılış: amblem karanlıktan gözleriyle çıkar, gözler imleci izler, kaydırınca göz bebeği genişleyip maç görüntüsüne açılır. Yakın planda doku Catmull-Rom ile örneklenir, iris lifleri shader'da çizilir, çevre ışınsal akışla karanlığa çekilir. Böylece 1423 piksellik görsel 70 kat büyütmede de keskin görünür.
 - Tek vurgu rengi `#FF9F0A`: Apple'ın sistem turuncusu, baykuşun gözüyle aynı aile. Yazı tipi Mona Sans.
-- Kurallar Google Dokümanı'ndan build sırasında çekilip sayfaya dönüştürülür: arama ve kurala doğrudan bağlantı var, admin numaraya tıklayınca link kopyalanır. Kaynak belge değişmedi.
+- Kurallar Google Dokümanı'ndan build sırasında çekilip sayfaya dönüştürülür: arama ve kurala doğrudan bağlantı var, admin numaraya tıklayınca link kopyalanır. Belgedeki yazım hataları `src/data/rule-fixes.json` ile sitede düzeltilir, kaynak belge değişmedi. Belgede bir satır değişirse derleme uyarı verir.
 - Başvuru tek sayfada, Apple Store yapılandırıcısı gibi. Takım veya Topluluk seçilince amblem, beklentiler, hazırlık listesi ve süreç değişir. Bilgiler gerçek Google Formlardan alındı.
 - Başvurular şu an kapalı: düğmeler açık görünür, tıklanınca davet usulü bildirimi açılır. Form bağlantıları HTML'de yer almaz. Yeniden açmak için `src/data/site.js` içinde `applications.open` değeri `true` yapılır.
-- KAFES yetkili başvurusu kaldırıldı. KAFES bölümü duruyor, sitede ve kurallar sayfasında kapalı olduğu yazıyor. Form adresi gerekirse: `https://docs.google.com/forms/d/e/1FAIpQLSeR77Vd5H3IOtE95iGvi-kEK3KZIYrDWuhDx8oMSvA7tWy-Iw/viewform`
+- Kafes yetkili başvurusu kaldırıldı. Kafes bölümü duruyor, sitede ve kurallar sayfasında kapalı olduğu yazıyor. Form adresi gerekirse: `https://docs.google.com/forms/d/e/1FAIpQLSeR77Vd5H3IOtE95iGvi-kEK3KZIYrDWuhDx8oMSvA7tWy-Iw/viewform`
 - Kadro ve Discord sayıları tarayıcıda canlı güncellenir, build anındaki değer yedektir.
 - Eski adresler yönlendirilir: `/takimbasvuru`, `/toplulukbasvuru`, `/rules`, `/team-application`, `/stats`.
 - Hareket azaltma tercihi, WebGL yokluğu ve kapalı JavaScript durumlarında site statik haliyle tam çalışır.
@@ -79,20 +79,26 @@ Video (ana döngü 3,2 MB, galeri klipleri 160-780 KB) yalnızca kullanıcı kay
 ## Karar bekleyenler
 
 1. **Beceri şartı:** eski site "en az birinde çok iyi", takım formu "en az ikisi" diyor. Yeni sitede form esas alındı.
-2. **Kural belgesi:** KAOS siteden kaldırılmış ama Kural 1.3 ve 3.6 hâlâ KAOS'a yönlendiriyor. Kural 0'da `insiyatif` yazım hatası var (doğrusu `inisiyatif`). Metin Google Dokümanı'ndan geldiği için düzeltme belgede yapılmalı.
+2. **Kural belgesi:** Kaos siteden kaldırılmış ama Kural 1.3 ve 3.6 hâlâ Kaos'a yönlendiriyor. Yazım hataları sitede düzeltildi, Google Dokümanı'na da işlenmesi iyi olur.
 3. **Başarılar 2023'te bitiyor.** 2024-2026 sonuçları varsa `src/data/tournaments.js` dosyasına eklenmeli; sayaçlar otomatik güncellenir.
 4. **GREY ve WHITE amblemleri sitede yoktu**, mavi logodan türetildi. Resmî sürümleri varsa `assets-src/original/images` içine konup `npm run assets` çalıştırılmalı.
 5. **Yasal metinler** çerez ve analitik topluyoruz diyor; yeni site çerez kullanmıyor ve analitik içermiyor. Metinler aynen taşındı (yalnızca "kuruşuları" yazım hatası düzeltildi), güncellenmeleri gerekiyor.
 6. **Atatürk atfı:** alıntı yaygın olarak ona mal ediliyor ama birincil kaynak bulunamadı. Eski sitede imza yoktu, yeni sitede de yok.
 7. **Discord splash görseli** "Adrian Borda" imzalı üçüncü taraf eseri. Yeni sitede kullanılmadı, Discord'daki kullanımın lisansı kontrol edilmeli.
-8. **Canlı sunucu doluluğu gösterilmiyor.** BattleMetrics API'si artık abonelik istiyor, widget 403 dönüyor. KAFES yeniden açılırsa doluluk için `api.blackowls.net` tarafına A2S sorgusu yapan bir uç nokta eklenmesi gerekir.
-9. **Bildirim metni** kullanıcının verdiği haliyle `Black Owls` yazıyor, sitenin geri kalanı `Black owLs`. Tek noktadan değişir: `src/data/site.js`.
+8. **Canlı sunucu doluluğu gösterilmiyor.** BattleMetrics API'si artık abonelik istiyor, widget 403 dönüyor. Kafes yeniden açılırsa doluluk için `api.blackowls.net` tarafına A2S sorgusu yapan bir uç nokta eklenmesi gerekir.
 
 ## Yazım kuralı
 
 - Tam cümleler noktayla biter. Liste, tablo ve düğme parçalarında nokta olmaz.
 - Başlık ve düğmelerde yalnızca ilk kelime büyük yazılır; özel adlar kendi yazımını korur.
 - İki noktadan sonra tam cümle geliyorsa büyük harfle, kelime ya da öbek geliyorsa küçük harfle devam edilir.
+- `Black owLs` ve `owL` özel yazımdır. Kafes, Kaos ve rütbe adları (Black, Grey, White, Blue, Yellow, Red) yalnızca ilk harfi büyük yazılır.
+- Kısaltmalar (TK, SL, FOB, KVKK, OWI) büyük kalır. Oyuncu adlarına dokunulmaz, sunucu adı oyun içindeki birebir hâliyle durur.
+
+## Rütbe ve tag
+
+- Ana tag `owL`. Black ve Red `owL`, Grey `owLg` taşır.
+- White, Blue ve Yellow tag takmaz. Yellow artık yakın arkadaş statüsündedir.
 
 ## Araştırma kaynakları
 

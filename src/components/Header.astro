@@ -116,7 +116,12 @@ const { theme = 'dark' } = Astro.props;
   .tools summary {
     opacity: 0.82;
     cursor: pointer;
-    transition: opacity 160ms ease;
+    transition: opacity 160ms ease, color 160ms ease;
+  }
+
+  .links > a[aria-current='true'] {
+    opacity: 1;
+    color: var(--amber);
   }
 
   @media (hover: hover) and (pointer: fine) {

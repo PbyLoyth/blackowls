@@ -44,6 +44,14 @@ X-Content-Type-Options: nosniff
 Referrer-Policy: strict-origin-when-cross-origin
 ```
 
+## Tek dosya olarak paylaşma
+
+```bash
+npm run paylas
+```
+
+Bu komut siteyi derler ve `paylasim/Black-owLs.html` dosyasını üretir. Görseller, videolar, yazı tipleri ve altı sayfa dosyanın içindedir. Çift tıklayınca sunucusuz açılır, internet yokken de çalışır. Dosyada bağlantılar `#/basvuru` biçimindedir. YouTube dosyadan açılan sayfalara gömülü oynatıcı vermediği için fragman yeni sekmede açılır.
+
 ## İçerik güncelleme
 
 | Ne | Nerede |
@@ -58,7 +66,7 @@ Referrer-Policy: strict-origin-when-cross-origin
 
 ## Görsel ve video üretimi
 
-Ham görseller `assets-src/original/` altındadır. Fragman kaynağı `assets-src/trailer/` boyutu nedeniyle depoya alınmadı. Üretilmiş klipler `public/media/` içinde durduğu için site onsuz da derlenir, `tools/build_media.sh` ise yalnızca fragman dosyası varken çalışır.
+Ham görseller `assets-src/original/` altındadır. Fragman kaynağı boyutu nedeniyle depoya alınmadı, `tools/build_media.sh` dosyasının başındaki komutla YouTube'dan 1440p olarak indirilir. Üretilmiş videolar `public/media/` (1080p ve telefon için 720p) ile `assets-src/paylasim/` (tek dosya için WebM) içinde durduğu için site onsuz da derlenir.
 
 ```bash
 npm run assets

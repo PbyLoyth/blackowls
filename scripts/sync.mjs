@@ -147,6 +147,10 @@ async function main() {
 
   const rules = JSON.parse(readFileSync(join(DATA, 'rules.json'), 'utf8'));
   console.log(`  kural bölümü: ${rules.sections.length}`);
+  const fixes = JSON.parse(readFileSync(join(DATA, 'rule-fixes.json'), 'utf8'));
+  const lines = new Set([...rules.preface, ...rules.sections.flatMap((s) => [...s.intro, ...s.rules.flatMap((r) => r.text)])]);
+  const stale = Object.keys(fixes).filter((line) => !lines.has(line));
+  if (stale.length) console.warn(`  belgede değişen kural satırı: ${stale.length}, rule-fixes.json güncellenmeli`);
 }
 
 main();

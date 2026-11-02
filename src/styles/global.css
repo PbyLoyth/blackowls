@@ -39,6 +39,12 @@ html {
   background: var(--black);
 }
 
+/* Ana sayfa bölümleri kendi iç boşluğunu taşır, menünün hemen altında başlar */
+main > section[id],
+main > div > section[id] {
+  scroll-margin-top: -16px;
+}
+
 body {
   margin: 0;
   font-family: var(--font);

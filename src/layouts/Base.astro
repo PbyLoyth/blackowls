@@ -7,7 +7,7 @@ import Footer from '../components/Footer.astro';
 import { site, socials } from '../data/site.js';
 
 const { title = site.title, description = site.description, noindex = false, theme = 'dark' } = Astro.props;
-const canonical = new URL(Astro.url.pathname.replace(/\.html$/, ''), site.url).href;
+const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/'), site.url).href;
 
 const schema = {
   '@context': 'https://schema.org',

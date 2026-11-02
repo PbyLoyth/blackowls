@@ -20,6 +20,7 @@ const items = [
         <figure class="tile" data-item>
           <img src={`/media/${item.id}.webp`} alt="" width="1280" height="720" loading="lazy" decoding="async" />
           <video muted playsinline preload="none" aria-hidden="true" tabindex="-1">
+            <source media="(max-width: 700px)" src={`/media/${item.id}-720.mp4`} type="video/mp4" />
             <source src={`/media/${item.id}.mp4`} type="video/mp4" />
           </video>
           <figcaption>

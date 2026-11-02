@@ -5,6 +5,7 @@
   <div class="stage" data-stage>
     <div class="film" data-film-wrap>
       <video data-reel data-poster="/media/reel.webp" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+        <source media="(max-width: 700px)" src="/media/reel-720.mp4" type="video/mp4" />
         <source src="/media/reel.mp4" type="video/mp4" />
       </video>
       <div class="film__ui" data-film-ui>
@@ -44,6 +45,7 @@
       <a class="pill" href="/basvuru">Aramıza katıl</a>
       <button class="more" type="button" data-trailer>Fragmanı izle</button>
     </div>
+    <p class="hero__hint" aria-hidden="true">Kaydır<i></i></p>
   </section>
 
   <div class="dive" data-dive-gap aria-hidden="true"></div>
@@ -260,6 +262,45 @@
 
   .hero__cta {
     animation-delay: 190ms;
+  }
+
+  /* Dalış kaydırmayla başlar, ilk ekranda küçük bir işaret yeter */
+  .hero__hint {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(14px, 2.8svh, 28px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: -3.4em;
+    padding: 7px 14px 7px 16px;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.42);
+    color: rgb(255 255 255 / 0.86);
+    font-size: 0.8125rem;
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    backdrop-filter: saturate(160%) blur(14px);
+    animation-delay: 1200ms;
+  }
+
+  .hero__hint i {
+    width: 8px;
+    height: 8px;
+    margin-top: -4px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    animation: hint-bob 1800ms ease-in-out infinite;
+  }
+
+  @keyframes hint-bob {
+    50% {
+      transform: translateY(3px) rotate(45deg);
+    }
+  }
+
+  :global(html:not(.gl)) .hero__hint {
+    display: none;
   }
 
   /* 0,01 opaklık: metin ilk karede boyanmış sayılır, LCP gecikmez */

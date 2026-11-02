@@ -3,15 +3,15 @@ export const site = {
   url: 'https://blackowls.net',
   title: 'Black owLs | Squad Türkiye e-spor takımı ve topluluğu',
   description:
-    "Black owLs, 2018'den beri sadece Türk oyunculardan oluşan kadrosuyla Squad sahnesinde yarışan e-spor takımı ve topluluğu.",
+    'Black owLs, 2018’den beri sadece Türk oyunculardan oluşan kadrosuyla Squad sahnesinde yarışan e-spor takımı ve topluluğu.',
   email: 'blackowlsresmi@gmail.com',
   discord: 'https://discord.blackowls.net/',
   trailer: 'XfJU8fCtORo',
   server: {
     name: '[TR] ▦ KAFES ▦ TRY HARD | BLACKOWLS.NET | HOSTED BY SQTR',
-    short: 'KAFES',
+    short: 'Kafes',
     ip: '5.9.104.40:7793',
-    status: 'KAFES şu an için kapalı. İhtiyaç durumunda tekrar açılacaktır.',
+    status: 'Kafes şu an için kapalı. İhtiyaç durumunda tekrar açılacaktır.',
   },
 };
 
@@ -19,7 +19,7 @@ export const site = {
 export const applications = {
   open: false,
   notice:
-    'Şu an için owL (Black Owls) bünyesine genel oyuncu başvuruları kapalıdır. Kadromuza katılımlar yalnızca mevcut kadronun inisiyatifi doğrultusunda davet usulü ile gerçekleştirilmektedir.',
+    'Şu an için owL (Black owLs) bünyesine genel oyuncu başvuruları kapalıdır. Kadromuza katılımlar yalnızca mevcut kadronun inisiyatifi doğrultusunda davet usulü ile gerçekleştirilmektedir.',
 };
 
 export const socials = [
@@ -30,17 +30,17 @@ export const socials = [
 ];
 
 export const tools = [
-  { label: 'Stats', note: 'Maç ve oyuncu istatistikleri', href: 'https://stats.squadtr.com/owl/match/' },
+  { label: 'İstatistik', note: 'Maç ve oyuncu istatistikleri', href: 'https://stats.squadtr.com/owl/match/' },
   { label: 'Taktik', note: 'Harita üstünde strat planı', href: 'https://strat.squadtr.com' },
-  { label: 'Maps', note: 'Squad harita katmanları', href: 'https://squadmaps.com/' },
-  { label: 'Mortar', note: 'Havan hesaplayıcı', href: 'https://squadcalc.app/' },
+  { label: 'Harita', note: 'Squad harita katmanları', href: 'https://squadmaps.com/' },
+  { label: 'Havan', note: 'Havan hesaplayıcı', href: 'https://squadcalc.app/' },
 ];
 
 export const nav = [
   { label: 'Neden', href: '/#neden' },
   { label: 'Başarılar', href: '/#basarilar' },
   { label: 'Kadro', href: '/#kadro' },
-  { label: 'KAFES', href: '/#kafes' },
+  { label: 'Kafes', href: '/#kafes' },
   { label: 'Kurallar', href: '/kurallar' },
 ];
 
