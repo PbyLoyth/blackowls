@@ -1,5 +1,5 @@
 ---
-import { site, formatCount } from '../data/site.js';
+import { site, formatCount, ayarlar } from '../data/site.js';
 import discord from '../data/discord.json';
 
 const rules = [
@@ -12,7 +12,7 @@ const rules = [
 <section class="cage" id="kafes" aria-labelledby="kafes-title">
   <div class="w">
     <h2 class="title" id="kafes-title" data-fade>
-      Kafes. <span>Try hard. Acemi oyuncular hoş karşılanmaz.</span>
+      Kafes. <span data-ayar="basliklar.kafes">{ayarlar.basliklar.kafes}</span>
     </h2>
 
     <div class="bento">
@@ -20,20 +20,22 @@ const rules = [
         <svg class="server__icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M1 1h18v18H1zM7 1v18M13 1v18M1 7h18M1 13h18" /></svg>
         <div class="server__head">
           <h3 class="sub">Sunucu bilgileri</h3>
-          <p class="server__state"><i aria-hidden="true"></i>{site.server.status}</p>
+          <p class="server__state" data-ayar-durum="kafes.acik" data-durum={site.server.open ? 'acik' : 'kapali'}>
+            <i aria-hidden="true"></i><span data-ayar="kafes.durum">{site.server.status}</span>
+          </p>
         </div>
         <div class="server__rows">
-          <button class="copy" type="button" data-copy={site.server.name}>
+          <button class="copy" type="button" data-copy={site.server.name} data-ayar-ozellik="data-copy:kafes.ad">
             <span class="copy__body">
               <small>Sunucu adı</small>
-              <code>{site.server.name}</code>
+              <code data-ayar="kafes.ad">{site.server.name}</code>
             </span>
             <span class="copy__tag" data-copy-label>Kopyala</span>
           </button>
-          <button class="copy" type="button" data-copy={site.server.ip}>
+          <button class="copy" type="button" data-copy={site.server.ip} data-ayar-ozellik="data-copy:kafes.ip">
             <span class="copy__body">
               <small>IP adresi</small>
-              <code>{site.server.ip}</code>
+              <code data-ayar="kafes.ip">{site.server.ip}</code>
             </span>
             <span class="copy__tag" data-copy-label>Kopyala</span>
           </button>
@@ -117,6 +119,10 @@ const rules = [
     gap: 9px;
     margin-top: 8px;
     padding-right: 48px;
+  }
+
+  .server__state[data-durum='acik'] i {
+    background: #30d158;
   }
 
   .server__state i {

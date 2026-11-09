@@ -1,0 +1,719 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Alanlar sunucudaki şemayla aynı yolları kullanır (docs/YONETIM.md)
+const bolumler = [
+  {
+    id: 'basvuru',
+    baslik: 'Başvurular',
+    alanlar: [
+      { yol: 'basvuru.acik', tur: 'anahtar', etiket: 'Başvurular açık', yardim: 'Kapalıyken düğmeler formu açmaz, aşağıdaki bildirimi gösterir.' },
+      { yol: 'basvuru.bildirim', tur: 'uzun', etiket: 'Kapalıyken çıkan bildirim', en: 400 },
+      { yol: 'basvuru.takimFormu', etiket: 'Takım başvuru formu', en: 300, kod: true, ipucu: 'https://docs.google.com/forms/…' },
+      { yol: 'basvuru.toplulukFormu', etiket: 'Topluluk başvuru formu', en: 300, kod: true, ipucu: 'https://docs.google.com/forms/…' },
+    ],
+  },
+  {
+    id: 'basliklar',
+    baslik: 'Başlıklar',
+    onizleme: true,
+    alanlar: [
+      { yol: 'basliklar.anaGri', etiket: 'Ana başlık, gri satır', en: 90 },
+      { yol: 'basliklar.anaBeyaz', etiket: 'Ana başlık, beyaz satır', en: 90 },
+      { yol: 'basliklar.altYazi', etiket: 'Ana başlığın altındaki yazı', en: 160 },
+      { yol: 'basliklar.oneCikanlar', etiket: 'Öne çıkanlar bölümü', en: 90 },
+      { yol: 'basliklar.katil', etiket: 'Başvuru bölümü', en: 90 },
+      { yol: 'basliklar.kafes', etiket: 'Kafes bölümü', on: 'Kafes.', en: 90 },
+      { yol: 'basliklar.araclar', etiket: 'Araçlar bölümü', on: 'Araçlar.', en: 90 },
+      { yol: 'basliklar.basvuruSayfasi', etiket: 'Başvuru sayfası', on: 'Aramıza katıl.', en: 90 },
+      { yol: 'basliklar.kurallarSayfasi', etiket: 'Kurallar sayfası', on: 'Kurallar.', en: 90 },
+    ],
+  },
+  {
+    id: 'kafes',
+    baslik: 'Kafes',
+    alanlar: [
+      { yol: 'kafes.acik', tur: 'anahtar', etiket: 'Sunucu açık', yardim: 'Durum noktası açıkken yeşil, kapalıyken turuncu yanar.' },
+      { yol: 'kafes.durum', etiket: 'Durum yazısı', en: 160 },
+      { yol: 'kafes.ad', etiket: 'Sunucu adı', en: 120, kod: true },
+      { yol: 'kafes.ip', etiket: 'IP adresi', en: 60, kod: true, ipucu: '5.9.104.40:7793' },
+    ],
+  },
+  {
+    id: 'duyuru',
+    baslik: 'Duyuru şeridi',
+    alanlar: [
+      { yol: 'duyuru.acik', tur: 'anahtar', etiket: 'Şerit açık', yardim: 'Menünün altında ince bir satır olarak görünür, ziyaretçi kapatabilir.' },
+      { yol: 'duyuru.metin', etiket: 'Duyuru metni', en: 140, bosOlur: true },
+      { yol: 'duyuru.baglanti', etiket: 'Bağlantı', en: 300, bosOlur: true, ipucu: 'https://… ya da /kurallar' },
+    ],
+  },
+];
+---
+
+<Base title="Yönetim | Black owLs" description="Black owLs site yönetimi." noindex theme="light">
+  <div class="yon on-light" data-yon data-durum="yukleniyor">
+    <div class="w">
+      <header class="yon__bas" data-goster="panel" hidden>
+        <h1 class="title">Yönetim. <span>Sitenin canlı ayarları.</span></h1>
+        <p class="not">Kaydettiğin değişiklikler bir dakika içinde sitede görünür.</p>
+        <p class="kim" data-kim hidden>
+          <span data-kim-ad></span>
+          <button type="button" data-cikis>Çıkış yap</button>
+        </p>
+      </header>
+
+      <section class="kapi" data-goster="giris" hidden aria-labelledby="kapi-baslik">
+        <img src="/img/owl-black.webp" width="63" height="84" alt="" />
+        <h2 class="sub" id="kapi-baslik">Yönetim girişi</h2>
+        <p class="hata" data-giris-hata role="alert" hidden></p>
+        <a class="pill discord" href="/api/auth/giris">
+          <svg viewBox="0 0 24 24" aria-hidden="true"
+            ><path
+              d="M19.3 5.3A16.6 16.6 0 0 0 15.2 4l-.5 1.1a15.3 15.3 0 0 0-5.4 0L8.8 4a16.5 16.5 0 0 0-4.1 1.3C2.1 9.2 1.4 13 1.7 16.7a16.7 16.7 0 0 0 5.1 2.6l1.1-1.8a10.8 10.8 0 0 1-1.7-.8l.4-.3a11.9 11.9 0 0 0 10.8 0l.4.3a10.7 10.7 0 0 1-1.7.8l1.1 1.8a16.6 16.6 0 0 0 5.1-2.6c.4-4.3-.7-8-2.9-11.4ZM8.7 14.5c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.8 2.1-1.9 2.1Zm6.6 0c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.8 2.1-1.9 2.1Z"
+            ></path></svg
+          >
+          Discord ile giriş yap
+        </a>
+      </section>
+
+      <section class="kapi" data-goster="yok" hidden>
+        <h2 class="sub">Panel burada çalışmıyor</h2>
+        <p>Yönetim paneli yalnız Cloudflare'deki canlı sitede çalışır. Bu kopyada site varsayılan metinlerle açılır.</p>
+      </section>
+
+      <form class="form" data-goster="panel" data-form hidden novalidate>
+        {
+          bolumler.map((b) => (
+            <section class="kart" aria-labelledby={`b-${b.id}`}>
+              <h2 class="kart__baslik" id={`b-${b.id}`}>
+                {b.baslik}
+              </h2>
+
+              {b.onizleme && (
+                <div class="onizle" aria-hidden="true">
+                  <p class="onizle__ust">
+                    <span class="onizle__gri" data-onizle="basliklar.anaGri" />
+                    <span data-onizle="basliklar.anaBeyaz" />
+                  </p>
+                  <p class="onizle__alt" data-onizle="basliklar.altYazi" />
+                </div>
+              )}
+
+              {b.alanlar.map((a) =>
+                a.tur === 'anahtar' ? (
+                  <label class="satir satir--anahtar">
+                    <span>
+                      <b>{a.etiket}</b>
+                      {a.yardim && <small>{a.yardim}</small>}
+                    </span>
+                    <input class="anahtar" type="checkbox" role="switch" name={a.yol} />
+                  </label>
+                ) : (
+                  <div class="satir">
+                    <div class="satir__ust">
+                      <label for={`a-${a.yol}`}>{a.etiket}</label>
+                      <span class="say" data-say={a.yol} aria-hidden="true" />
+                    </div>
+                    <div class:list={['kutu', { 'kutu--on': a.on }]}>
+                      {a.on && <span class="kutu__on">{a.on}</span>}
+                      {a.tur === 'uzun' ? (
+                        <textarea id={`a-${a.yol}`} name={a.yol} rows="3" maxlength={a.en} required />
+                      ) : (
+                        <input
+                          id={`a-${a.yol}`}
+                          name={a.yol}
+                          type="text"
+                          maxlength={a.en}
+                          placeholder={a.ipucu}
+                          required={!a.bosOlur}
+                          spellcheck={a.kod ? 'false' : undefined}
+                          class:list={{ kod: a.kod }}
+                          autocomplete="off"
+                        />
+                      )}
+                    </div>
+                    <p class="alan-hata" data-hata={a.yol} hidden />
+                  </div>
+                ),
+              )}
+            </section>
+          ))
+        }
+
+        <details class="kart gecmis" data-gecmis hidden>
+          <summary class="kart__baslik">Son değişiklikler</summary>
+          <ol data-gecmis-liste></ol>
+        </details>
+
+        <div class="cubuk">
+          <p class="cubuk__durum" data-kayit-durum aria-live="polite"></p>
+          <button class="more" type="button" data-varsayilan>Varsayılana dön</button>
+          <button class="pill" type="submit" data-kaydet disabled>Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .yon {
+    min-height: 100svh;
+    padding: calc(var(--ust-h) + clamp(32px, 6vw, 72px)) 0 clamp(40px, 6vw, 72px);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .w {
+    width: min(100% - 2 * var(--gutter), 760px);
+    margin-inline: auto;
+  }
+
+  .yon__bas {
+    margin-bottom: clamp(24px, 4vw, 40px);
+  }
+
+  .not {
+    margin-top: 10px;
+    color: var(--g4);
+  }
+
+  .kim {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 14px;
+    color: var(--g4);
+    font-size: 0.9375rem;
+  }
+
+  .kim span::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: #248a3d;
+    transform: translateY(-1px);
+  }
+
+  .kim button {
+    color: var(--amber-ink);
+  }
+
+  /* Girişte yalnız kart görünür ve sayfanın ortasında durur */
+  .yon:is([data-durum='yukleniyor'], [data-durum='giris'], [data-durum='yok']) .w {
+    display: grid;
+    place-items: center;
+    min-height: calc(100svh - var(--ust-h) - clamp(72px, 12vw, 144px));
+  }
+
+  .kapi {
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    max-width: 30rem;
+    margin-inline: auto;
+    padding: clamp(28px, 5vw, 44px) clamp(22px, 4vw, 36px);
+    border-radius: var(--r-l);
+    background: var(--white);
+    text-align: center;
+  }
+
+  .kapi p {
+    color: var(--g4);
+  }
+
+  .hata,
+  .alan-hata {
+    color: var(--amber-ink);
+    font-size: 0.875rem;
+  }
+
+  .discord {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+    background: #5865f2;
+    color: var(--white);
+  }
+
+  .discord svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  .form {
+    display: grid;
+    gap: 16px;
+  }
+
+  .kart {
+    padding: 6px clamp(18px, 3vw, 26px) 10px;
+    border-radius: var(--r-m);
+    background: var(--white);
+  }
+
+  .kart__baslik {
+    padding-block: 16px 6px;
+    font-size: 1.1875rem;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+  }
+
+  .satir {
+    display: grid;
+    gap: 8px;
+    padding-block: 14px;
+  }
+
+  .satir + .satir {
+    border-top: 1px solid var(--g1);
+  }
+
+  .satir--anahtar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+  }
+
+  .satir--anahtar b {
+    display: block;
+    font-weight: 500;
+  }
+
+  .satir small {
+    display: block;
+    margin-top: 2px;
+    color: var(--g4);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+
+  .satir__ust {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .say {
+    color: var(--g3);
+    font-variant-numeric: tabular-nums;
+    font-weight: 400;
+  }
+
+  .say[data-dolu] {
+    color: var(--amber-ink);
+  }
+
+  .kutu {
+    display: flex;
+    align-items: baseline;
+    border-radius: var(--r-s);
+    background: var(--paper);
+    box-shadow: inset 0 0 0 1px transparent;
+    transition: box-shadow 140ms ease, background-color 140ms ease;
+  }
+
+  .kutu:focus-within {
+    background: var(--white);
+    box-shadow: inset 0 0 0 1.5px var(--amber), 0 0 0 4px rgb(255 159 10 / 0.16);
+  }
+
+  .kutu__on {
+    flex: none;
+    padding-left: 14px;
+    font-weight: 600;
+  }
+
+  .kutu input,
+  .kutu textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 14px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1.4;
+    outline: none;
+  }
+
+  .kutu--on input {
+    padding-left: 6px;
+    color: var(--g4);
+  }
+
+  .kutu textarea {
+    resize: vertical;
+    min-height: 5.6em;
+  }
+
+  .kutu .kod {
+    font-family: var(--mono);
+    font-size: 0.875rem;
+  }
+
+  .satir[data-hatali] .kutu {
+    box-shadow: inset 0 0 0 1.5px var(--amber-ink);
+  }
+
+  .anahtar {
+    appearance: none;
+    position: relative;
+    flex: none;
+    width: 51px;
+    height: 31px;
+    margin: 0;
+    border-radius: 31px;
+    background: var(--g2);
+    cursor: pointer;
+    transition: background-color 200ms ease;
+  }
+
+  .anahtar::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    background: var(--white);
+    box-shadow: 0 3px 8px rgb(0 0 0 / 0.15), 0 1px 1px rgb(0 0 0 / 0.16);
+    transition: transform 220ms var(--ease);
+  }
+
+  .anahtar:checked {
+    background: var(--amber);
+  }
+
+  .anahtar:checked::after {
+    transform: translateX(20px);
+  }
+
+  .anahtar:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+  }
+
+  .onizle {
+    margin-block: 6px 10px;
+    padding: 22px 20px 20px;
+    border-radius: var(--r-s);
+    background: var(--black);
+    color: var(--paper);
+    text-align: center;
+  }
+
+  .onizle__ust {
+    font-size: clamp(1.25rem, 3.4vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .onizle__ust span {
+    display: block;
+  }
+
+  .onizle__gri {
+    color: var(--g3);
+  }
+
+  .onizle__alt {
+    margin-top: 8px;
+    color: var(--g2);
+    font-size: 0.8125rem;
+  }
+
+  .gecmis summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .gecmis summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .gecmis summary::after {
+    content: ' ›';
+    color: var(--g3);
+  }
+
+  .gecmis[open] summary::after {
+    content: ' ‹';
+  }
+
+  .gecmis ol {
+    padding-bottom: 8px;
+    list-style: none;
+  }
+
+  .gecmis li {
+    padding-block: 10px;
+    color: var(--g4);
+    font-size: 0.875rem;
+  }
+
+  .gecmis li + li {
+    border-top: 1px solid var(--g1);
+  }
+
+  .gecmis li b {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* Kaydet çubuğu formun altında, kaydırırken ekranda kalır */
+  .cubuk {
+    position: sticky;
+    bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 10px 10px 10px 20px;
+    border-radius: 980px;
+    background: rgb(255 255 255 / 0.86);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.1), inset 0 0 0 0.5px rgb(0 0 0 / 0.08);
+  }
+
+  .cubuk__durum {
+    margin-right: auto;
+    color: var(--g4);
+    font-size: 0.875rem;
+  }
+
+  .cubuk__durum[data-tur='hata'] {
+    color: var(--amber-ink);
+  }
+
+  .cubuk .pill[disabled] {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  @media (max-width: 560px) {
+    .cubuk {
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      border-radius: var(--r-m);
+    }
+
+    .cubuk__durum {
+      flex-basis: 100%;
+    }
+
+    .cubuk .pill {
+      margin-left: auto;
+    }
+  }
+</style>
+
+<script>
+  type Ayarlar = Record<string, Record<string, string | boolean>>;
+
+  const kok = document.querySelector<HTMLElement>('[data-yon]')!;
+  const form = document.querySelector<HTMLFormElement>('[data-form]')!;
+  const kaydet = form.querySelector<HTMLButtonElement>('[data-kaydet]')!;
+  const durum = form.querySelector<HTMLElement>('[data-kayit-durum]')!;
+  const API = '/api/yonetim/ayarlar';
+
+  const hatalar: Record<string, string> = {
+    izin: 'Bu Discord hesabının yönetim yetkisi yok.',
+    durum: 'Giriş isteğinin süresi doldu. Yeniden dene.',
+    discord: 'Discord’a ulaşılamadı. Biraz sonra yeniden dene.',
+    iptal: 'Discord girişi iptal edildi.',
+    yapilandirma: 'Yönetim girişi henüz kurulmadı.',
+  };
+
+  let varsayilan: Ayarlar | null = null;
+  let kayitli = '';
+
+  const goster = (hal: string) => {
+    kok.dataset.durum = hal;
+    document.querySelectorAll<HTMLElement>('[data-goster]').forEach((el) => {
+      el.hidden = el.dataset.goster !== hal;
+    });
+  };
+
+  const alanlar = () => [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[name]')];
+
+  const doldur = (ayarlar: Ayarlar) => {
+    for (const el of alanlar()) {
+      const [bolum, ad] = el.name.split('.');
+      const deger = ayarlar[bolum]?.[ad];
+      if (el instanceof HTMLInputElement && el.type === 'checkbox') el.checked = deger === true;
+      else el.value = typeof deger === 'string' ? deger : '';
+    }
+    tazele();
+  };
+
+  const topla = (): Ayarlar => {
+    const sonuc: Ayarlar = structuredClone(varsayilan!);
+    for (const el of alanlar()) {
+      const [bolum, ad] = el.name.split('.');
+      sonuc[bolum][ad] = el instanceof HTMLInputElement && el.type === 'checkbox' ? el.checked : el.value.trim();
+    }
+    return sonuc;
+  };
+
+  // Sayaç, önizleme ve Kaydet düğmesi formdaki her değişiklikte güncellenir
+  const tazele = () => {
+    for (const el of alanlar()) {
+      const say = form.querySelector<HTMLElement>(`[data-say="${el.name}"]`);
+      if (say && el.maxLength > 0) {
+        say.textContent = `${el.value.length}/${el.maxLength}`;
+        say.toggleAttribute('data-dolu', el.value.length >= el.maxLength);
+      }
+      const onizle = form.querySelector<HTMLElement>(`[data-onizle="${el.name}"]`);
+      if (onizle) onizle.textContent = el.value;
+    }
+    const kirli = kayitli !== '' && JSON.stringify(topla()) !== kayitli;
+    kaydet.disabled = !kirli;
+    if (kirli) yaz('Kaydedilmemiş değişiklik var.');
+  };
+
+  const yaz = (metin: string, tur = '') => {
+    durum.textContent = metin;
+    durum.dataset.tur = tur;
+  };
+
+  const temizleHatalar = () => {
+    form.querySelectorAll<HTMLElement>('[data-hata]').forEach((el) => {
+      el.hidden = true;
+      el.closest('.satir')?.removeAttribute('data-hatali');
+    });
+  };
+
+  const zaman = (iso: string) =>
+    new Intl.DateTimeFormat('tr-TR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(iso));
+
+  const gecmisiYaz = (son: { ad: string; zaman: string } | null, gecmis: { ad: string; zaman: string; alanlar: string[] }[] = []) => {
+    if (son) yaz(`Son değişiklik: ${son.ad}, ${zaman(son.zaman)}`);
+    const kutu = form.querySelector<HTMLDetailsElement>('[data-gecmis]')!;
+    const liste = kutu.querySelector('[data-gecmis-liste]')!;
+    liste.replaceChildren(
+      ...gecmis.slice(0, 10).map((g) => {
+        const li = document.createElement('li');
+        const kim = document.createElement('b');
+        kim.textContent = g.ad;
+        li.append(kim, `, ${zaman(g.zaman)}: ${g.alanlar.length} alan`);
+        return li;
+      }),
+    );
+    kutu.hidden = gecmis.length === 0;
+  };
+
+  async function yukle() {
+    const params = new URLSearchParams(location.search);
+    const hata = params.get('hata');
+    if (hata) history.replaceState(null, '', location.pathname);
+
+    let yanit: Response;
+    try {
+      yanit = await fetch(API, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+    } catch {
+      goster('yok');
+      return;
+    }
+
+    if (yanit.status === 401) {
+      const kutu = document.querySelector<HTMLElement>('[data-giris-hata]')!;
+      if (hata) {
+        kutu.textContent = hatalar[hata] ?? 'Giriş yapılamadı.';
+        kutu.hidden = false;
+      }
+      goster('giris');
+      return;
+    }
+    if (!yanit.ok || !yanit.headers.get('content-type')?.includes('application/json')) {
+      goster('yok');
+      return;
+    }
+
+    const veri = await yanit.json();
+    varsayilan = veri.varsayilan;
+    doldur(veri.ayarlar);
+    kayitli = JSON.stringify(topla());
+    tazele();
+    gecmisiYaz(veri.son, veri.gecmis);
+
+    const kim = document.querySelector<HTMLElement>('[data-kim]')!;
+    kim.querySelector('[data-kim-ad]')!.textContent = veri.kullanici.ad;
+    kim.hidden = false;
+    goster('panel');
+  }
+
+  form.addEventListener('input', tazele);
+
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    temizleHatalar();
+    kaydet.disabled = true;
+    yaz('Kaydediliyor…');
+
+    try {
+      const yanit = await fetch(API, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(topla()),
+      });
+      const veri = await yanit.json().catch(() => ({}));
+
+      if (yanit.status === 401) {
+        goster('giris');
+        return;
+      }
+      if (yanit.status === 422 && veri.alanlar) {
+        for (const [yol, mesaj] of Object.entries<string>(veri.alanlar)) {
+          const el = form.querySelector<HTMLElement>(`[data-hata="${yol}"]`);
+          if (!el) continue;
+          el.textContent = mesaj;
+          el.hidden = false;
+          el.closest('.satir')?.setAttribute('data-hatali', '');
+        }
+        form.querySelector<HTMLElement>('[data-hatali] input, [data-hatali] textarea')?.focus();
+        yaz('Bazı alanlar düzeltilmeli.', 'hata');
+        kaydet.disabled = false;
+        return;
+      }
+      if (!yanit.ok) throw new Error(veri.hata);
+
+      doldur(veri.ayarlar);
+      kayitli = JSON.stringify(topla());
+      tazele();
+      gecmisiYaz(veri.son, veri.gecmis);
+      yaz('Kaydedildi. Sitede bir dakika içinde görünür.');
+    } catch (err) {
+      yaz((err as Error).message || 'Kaydedilemedi. Yeniden dene.', 'hata');
+      kaydet.disabled = false;
+    }
+  });
+
+  form.querySelector('[data-varsayilan]')!.addEventListener('click', () => {
+    if (!varsayilan) return;
+    temizleHatalar();
+    doldur(varsayilan);
+  });
+
+  document.querySelector('[data-cikis]')!.addEventListener('click', async () => {
+    await fetch('/api/auth/cikis', { method: 'POST', credentials: 'same-origin' }).catch(() => {});
+    location.reload();
+  });
+
+  addEventListener('beforeunload', (ev) => {
+    if (!kaydet.disabled) ev.preventDefault();
+  });
+
+  yukle();
+</script>

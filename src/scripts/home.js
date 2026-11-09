@@ -254,9 +254,6 @@ async function refreshRoster() {
       return li;
     });
     names.replaceChildren(...items);
-    document.querySelectorAll('[data-roster-count]').forEach((el) => {
-      el.textContent = String(list.length);
-    });
   } catch {
     /* sessizce geç */
   }

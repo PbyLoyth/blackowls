@@ -1,6 +1,7 @@
 ---
-import { nav, tools, socials } from '../data/site.js';
+import { nav, tools, socials, ayarlar } from '../data/site.js';
 const { theme = 'dark' } = Astro.props;
+const { duyuru } = ayarlar;
 ---
 
 <header class:list={['nav', `nav--${theme}`]}>
@@ -34,6 +35,19 @@ const { theme = 'dark' } = Astro.props;
     <button class="burger" type="button" data-menu-open aria-label="Menüyü aç" aria-haspopup="dialog">
       <span></span><span></span>
     </button>
+  </div>
+
+  <div class="duyuru" data-duyuru data-ayar-goster="duyuru.acik" hidden={!duyuru.acik || !duyuru.metin}>
+    <p>
+      <span data-ayar="duyuru.metin">{duyuru.metin}</span>
+      <a
+        href={duyuru.baglanti || undefined}
+        data-ayar-ozellik="href:duyuru.baglanti"
+        data-ayar-goster="duyuru.baglanti"
+        hidden={!duyuru.baglanti}>Ayrıntılar</a
+      >
+    </p>
+    <button class="duyuru__x" type="button" data-duyuru-kapat aria-label="Duyuruyu kapat"></button>
   </div>
 </header>
 
@@ -88,6 +102,78 @@ const { theme = 'dark' } = Astro.props;
     width: min(100% - 2 * var(--gutter), 1160px);
     height: 100%;
     margin-inline: auto;
+  }
+
+  /* Duyuru menünün hemen altında, sayfa düzenini itmeden durur */
+  .duyuru {
+    position: absolute;
+    inset: 100% 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 7px 52px;
+    border-top: 0.5px solid rgb(255 255 255 / 0.08);
+    background: rgb(29 29 31 / 0.94);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    color: var(--g2);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  .nav--light .duyuru {
+    border-top-color: rgb(0 0 0 / 0.06);
+    background: rgb(245 245 247 / 0.94);
+    color: var(--g5);
+  }
+
+  .duyuru a {
+    margin-left: 10px;
+    color: var(--amber);
+    white-space: nowrap;
+  }
+
+  .nav--light .duyuru a {
+    color: var(--amber-ink);
+  }
+
+  .duyuru a::after {
+    content: ' ›';
+  }
+
+  .duyuru__x {
+    position: absolute;
+    right: max(8px, calc(var(--gutter) - 12px));
+    top: 50%;
+    width: 32px;
+    height: 32px;
+    margin-top: -16px;
+    opacity: 0.6;
+    transition: opacity 140ms ease;
+  }
+
+  .duyuru__x::before,
+  .duyuru__x::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 15.5px;
+    height: 1px;
+    background: currentColor;
+    transform: rotate(45deg);
+  }
+
+  .duyuru__x::after {
+    transform: rotate(-45deg);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .duyuru__x:hover {
+      opacity: 1;
+    }
   }
 
   .brand {
@@ -347,4 +433,25 @@ const { theme = 'dark' } = Astro.props;
   document.addEventListener('keydown', (ev) => {
     if (ev.key === 'Escape' && tools?.open) tools.open = false;
   });
+
+  // Kapatılan duyuru aynı metin durdukça bir daha görünmez
+  const duyuru = document.querySelector('[data-duyuru]');
+  if (duyuru && !duyuru.hidden) {
+    const metin = duyuru.querySelector('[data-ayar="duyuru.metin"]')?.textContent ?? '';
+    let kapali = null;
+    try {
+      kapali = localStorage.getItem('bo-duyuru');
+    } catch {}
+    if (kapali === metin) duyuru.hidden = true;
+    // Şerit telefonda iki satıra inebilir; sayfa boşlukları gerçek yüksekliğe göre ayarlanır
+    const olc = () => document.documentElement.style.setProperty('--duyuru-h', `${duyuru.offsetHeight}px`);
+    olc();
+    new ResizeObserver(olc).observe(duyuru);
+    duyuru.querySelector('[data-duyuru-kapat]')?.addEventListener('click', () => {
+      duyuru.hidden = true;
+      try {
+        localStorage.setItem('bo-duyuru', metin);
+      } catch {}
+    });
+  }
 </script>

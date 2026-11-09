@@ -1,5 +1,5 @@
 ---
-import { tools } from '../data/site.js';
+import { tools, ayarlar } from '../data/site.js';
 
 const icons = {
   İstatistik: 'M4 20V10M10 20V4M16 20v-7M22 20H2',
@@ -11,7 +11,7 @@ const icons = {
 
 <section class="kit on-light" aria-labelledby="kit-title">
   <div class="w">
-    <h2 class="title" id="kit-title" data-fade>Araçlar. <span>Maçtan önce, maçtan sonra.</span></h2>
+    <h2 class="title" id="kit-title" data-fade>Araçlar. <span data-ayar="basliklar.araclar">{ayarlar.basliklar.araclar}</span></h2>
     <ul class="kit__grid">
       {
         tools.map((t, i) => (

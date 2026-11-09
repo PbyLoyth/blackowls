@@ -2,6 +2,7 @@
 import ApplyButton from './ApplyButton.astro';
 import ApplyNotice from './ApplyNotice.astro';
 import { paths } from '../data/paths.js';
+import { ayarlar } from '../data/site.js';
 
 const rows = [
   ['Kimin için', 'who'],
@@ -13,7 +14,7 @@ const rows = [
 
 <section class="join on-light" id="katil" aria-labelledby="join-title">
   <div class="w">
-    <h2 class="title" id="join-title" data-fade>Sana hangisi uygun?</h2>
+    <h2 class="title" id="join-title" data-fade data-ayar="basliklar.katil">{ayarlar.basliklar.katil}</h2>
     <p class="join__lead intro" data-fade>İki kapı, iki ayrı form. Hatalı form hoş karşılanmaz, o yüzden önce doğru kapıyı seç.</p>
 
     <div class="cols">
@@ -24,7 +25,7 @@ const rows = [
             <h3 class="sub">{p.name}</h3>
             <p class="col__kicker">{p.kicker}</p>
             <div class="col__cta">
-              <ApplyButton class="pill" form={p.form}>Başvur</ApplyButton>
+              <ApplyButton class="pill" form={p.form} alan={`${p.id}Formu`}>Başvur</ApplyButton>
             </div>
 
             <div class="ranks">

@@ -2,17 +2,13 @@
 import { applications } from '../data/site.js';
 ---
 
-{
-  !applications.open && (
-    <dialog class="notice" data-apply-notice aria-label="Başvuru bilgilendirmesi">
-      <div class="notice__in">
-        <img src="/img/owl-black.webp" width="63" height="84" alt="" />
-        <p>{applications.notice}</p>
-        <button class="pill" type="button" data-apply-close autofocus>Tamam</button>
-      </div>
-    </dialog>
-  )
-}
+<dialog class="notice" data-apply-notice aria-label="Başvuru bilgilendirmesi">
+  <div class="notice__in">
+    <img src="/img/owl-black.webp" width="63" height="84" alt="" />
+    <p data-ayar="basvuru.bildirim">{applications.notice}</p>
+    <button class="pill" type="button" data-apply-close autofocus>Tamam</button>
+  </div>
+</dialog>
 
 <style>
   .notice {

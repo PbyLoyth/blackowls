@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import ApplyButton from '../components/ApplyButton.astro';
 import ApplyNotice from '../components/ApplyNotice.astro';
 import { paths } from '../data/paths.js';
-import { site } from '../data/site.js';
+import { site, ayarlar } from '../data/site.js';
 ---
 
 <Base
@@ -31,7 +31,7 @@ import { site } from '../data/site.js';
     </div>
 
     <div class="panel">
-      <h1 class="title">Aramıza katıl. <span>Hangi kapıdan giriyorsun?</span></h1>
+      <h1 class="title">Aramıza katıl. <span data-ayar="basliklar.basvuruSayfasi">{ayarlar.basliklar.basvuruSayfasi}</span></h1>
 
       <div class="opts" role="radiogroup" aria-label="Başvuru türü" data-opts>
         {
@@ -85,7 +85,7 @@ import { site } from '../data/site.js';
             </div>
 
             <div class="go">
-              <ApplyButton class="pill" form={p.form}>{p.cta}</ApplyButton>
+              <ApplyButton class="pill" form={p.form} alan={`${p.id}Formu`}>{p.cta}</ApplyButton>
               <p class="cap">{p.questions} soruluk form</p>
             </div>
             <p class="note cap">{p.note}</p>
@@ -108,15 +108,15 @@ import { site } from '../data/site.js';
     gap: clamp(24px, 4vw, 72px);
     width: min(100% - 2 * var(--gutter), 1320px);
     margin-inline: auto;
-    padding-top: calc(var(--nav-h) + 20px);
+    padding-top: calc(var(--ust-h) + 20px);
     padding-bottom: clamp(56px, 7vw, 96px);
   }
 
   .media {
     position: sticky;
-    top: calc(var(--nav-h) + 20px);
+    top: calc(var(--ust-h) + 20px);
     align-self: start;
-    height: calc(100svh - var(--nav-h) - 40px);
+    height: calc(100svh - var(--ust-h) - 40px);
     min-height: 440px;
   }
 
@@ -220,7 +220,7 @@ import { site } from '../data/site.js';
   }
 
   .det {
-    scroll-margin-top: calc(var(--nav-h) + 24px);
+    scroll-margin-top: calc(var(--ust-h) + 24px);
   }
 
   .det[data-on] {

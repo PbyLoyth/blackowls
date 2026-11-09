@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /yonetim
 Sitemap: https://blackowls.net/sitemap.xml

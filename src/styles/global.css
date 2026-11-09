@@ -20,6 +20,7 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --gutter: clamp(20px, 4vw, 48px);
   --nav-h: 52px;
+  --ust-h: var(--nav-h);
   --r-l: 28px;
   --r-m: 20px;
   --r-s: 12px;
@@ -32,9 +33,25 @@
   box-sizing: border-box;
 }
 
+/* Yönetimden kapatılan öğeler bileşen stilleri ne derse desin görünmez */
+[hidden] {
+  display: none !important;
+}
+
+/* Duyuru şeridi açıkken sayfa içeriği onun altından başlar; yükseklik Header betiğiyle ölçülür */
+:root:has(.duyuru:not([hidden])) {
+  --ust-h: calc(var(--nav-h) + var(--duyuru-h, 38px));
+}
+
+@media (max-width: 640px) {
+  :root:has(.duyuru:not([hidden])) {
+    --ust-h: calc(var(--nav-h) + var(--duyuru-h, 56px));
+  }
+}
+
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--nav-h) + 16px);
+  scroll-padding-top: calc(var(--ust-h) + 16px);
   -webkit-text-size-adjust: 100%;
   background: var(--black);
 }

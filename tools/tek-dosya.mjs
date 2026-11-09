@@ -72,6 +72,9 @@ function packPage(page) {
       return `<source src="/paylasim/${name}.webm" type="video/webm"`;
     });
 
+  // Yönetim gibi sunucu isteyen bağlantılar dosyada çalışmaz
+  html = patch(html, /<li[^>]*><a[^>]*data-yalniz-canli[^>]*>[^<]*<\/a><\/li>/g, () => '');
+
   html = html.replace(/href="([^"]*)"/g, (all, href) => {
     return /^(?:[a-z]+:|\/\/)/i.test(href) ? all : `href="${link(href, page)}"`;
   });

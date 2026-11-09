@@ -1,0 +1,8 @@
+# Discord uygulama kimliği
+DISCORD_CLIENT_ID=ornek-discord-client-id
+# Discord uygulama gizli anahtarı
+DISCORD_CLIENT_SECRET=ornek-discord-client-secret
+# En az 32 karakterlik rastgele oturum anahtarı
+OTURUM_ANAHTARI=yerelde-degistir-bu-ornek-anahtar-uzunlugu-32
+# Virgülle ayrılmış Discord kullanıcı kimlikleri
+YONETICI_IDLERI=123456789012345678

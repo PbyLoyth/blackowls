@@ -49,6 +49,7 @@ const year = new Date().getFullYear();
         <li><a href="/gizlilik-politikasi">Gizlilik</a></li>
         <li><a href="/kullanim-kosullari">Kullanım koşulları</a></li>
         <li><a href="/kvkk-kosullari">KVKK</a></li>
+        <li><a class="admin" href="/yonetim" rel="nofollow" data-yalniz-canli>Yönetim</a></li>
       </ul>
     </div>
   </div>
@@ -102,6 +103,22 @@ const year = new Date().getFullYear();
     display: flex;
     flex-wrap: wrap;
     gap: 2px 18px;
+  }
+
+  /* Yönetim girişi bilerek sönük durur */
+  .admin {
+    opacity: 0.45;
+    transition: opacity 140ms ease, color 140ms ease;
+  }
+
+  .admin:focus-visible {
+    opacity: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .admin:hover {
+      opacity: 1;
+    }
   }
 
   @media (hover: hover) and (pointer: fine) {

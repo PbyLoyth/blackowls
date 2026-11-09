@@ -1,3 +1,8 @@
+import ayarlar from './ayarlar.json';
+
+// Yönetim panelinden değişebilen metinler ayarlar.json'da durur; canlıda Cloudflare KV bunların üstüne yazar
+export { ayarlar };
+
 export const site = {
   name: 'Black owLs',
   url: 'https://blackowls.net',
@@ -8,18 +13,18 @@ export const site = {
   discord: 'https://discord.blackowls.net/',
   trailer: 'XfJU8fCtORo',
   server: {
-    name: '[TR] ▦ KAFES ▦ TRY HARD | BLACKOWLS.NET | HOSTED BY SQTR',
+    name: ayarlar.kafes.ad,
     short: 'Kafes',
-    ip: '5.9.104.40:7793',
-    status: 'Kafes şu an için kapalı. İhtiyaç durumunda tekrar açılacaktır.',
+    ip: ayarlar.kafes.ip,
+    status: ayarlar.kafes.durum,
+    open: ayarlar.kafes.acik,
   },
 };
 
-// Başvurular kapalıyken düğmeler form yerine bu bildirimi açar. Açmak için open: true yap.
+// Başvurular kapalıyken düğmeler form yerine bu bildirimi açar
 export const applications = {
-  open: false,
-  notice:
-    'Şu an için owL (Black owLs) bünyesine genel oyuncu başvuruları kapalıdır. Kadromuza katılımlar yalnızca mevcut kadronun inisiyatifi doğrultusunda davet usulü ile gerçekleştirilmektedir.',
+  open: ayarlar.basvuru.acik,
+  notice: ayarlar.basvuru.bildirim,
 };
 
 export const socials = [

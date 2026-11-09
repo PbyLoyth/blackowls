@@ -3,13 +3,12 @@ import { tournaments, tally } from '../data/tournaments.js';
 
 const champions = tournaments.filter((t) => t.result === 'champion');
 const rest = tournaments.filter((t) => t.result !== 'champion');
-const span = tournaments.at(-1).year - tournaments[0].year + 1;
 ---
 
 <section class="rec on-light" id="basarilar" aria-labelledby="rec-title">
   <div class="w">
     <h2 class="title" id="rec-title" data-fade>
-      Başarılar. <span>{span} yılda {tournaments.length} turnuva: {tally.champion} şampiyonluk, {tally.final} final, {tally.semi} yarı final.</span>
+      Başarılar. <span>{tournaments.length} turnuva: {tally.champion} şampiyonluk, {tally.final} final, {tally.semi} yarı final.</span>
     </h2>
 
     <ol class="champs">
@@ -45,9 +44,12 @@ const span = tournaments.at(-1).year - tournaments[0].year + 1;
       }
     </ol>
 
-    <blockquote>
-      <p>“Zafer, ‘zafer benimdir’ diyebilenindir. Başarı ise ‘başaracağım’ diye başlayarak sonunda ‘başardım’ diyenindir.”</p>
-    </blockquote>
+    <figure class="quote">
+      <blockquote>
+        <p>“Zafer, ‘zafer benimdir’ diyebilenindir. Başarı ise ‘başaracağım’ diye başlayarak sonunda ‘başardım’ diyenindir.”</p>
+      </blockquote>
+      <figcaption>Mustafa Kemal Atatürk</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -178,11 +180,19 @@ const span = tournaments.at(-1).year - tournaments[0].year + 1;
     color: var(--paper);
   }
 
-  blockquote {
+  .quote {
     max-width: 40em;
     margin: clamp(32px, 4vw, 56px) auto 0;
     color: var(--g4);
     text-align: center;
+  }
+
+  .quote figcaption {
+    margin-top: 10px;
+    color: var(--ink);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.008em;
   }
 
   @media (max-width: 860px) {

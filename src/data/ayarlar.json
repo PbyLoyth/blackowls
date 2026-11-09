@@ -1,0 +1,30 @@
+{
+  "basvuru": {
+    "acik": false,
+    "bildirim": "Şu an için owL (Black owLs) bünyesine genel oyuncu başvuruları kapalıdır. Kadromuza katılımlar yalnızca mevcut kadronun inisiyatifi doğrultusunda davet usulü ile gerçekleştirilmektedir.",
+    "takimFormu": "https://docs.google.com/forms/d/e/1FAIpQLSfc1ojqPGIquy-ahSAkpw0e2bmQVYy2UOf1uDduz-AWTKdLkw/viewform",
+    "toplulukFormu": "https://docs.google.com/forms/d/e/1FAIpQLSdZHmNnfefAiaus-j9lTa3TdPwePv8EAlP42bHRKR6Bf1Bovw/viewform"
+  },
+  "basliklar": {
+    "anaGri": "Kazananlar asla vazgeçmez,",
+    "anaBeyaz": "vazgeçenler asla kazanamaz.",
+    "altYazi": "Sadece Türk oyunculardan oluşan bir kadroyla, 2018’den beri Squad sahnesinde.",
+    "oneCikanlar": "Öne çıkanlar.",
+    "katil": "Sana hangisi uygun?",
+    "kafes": "Try hard.",
+    "araclar": "Maçtan önce, maçtan sonra.",
+    "basvuruSayfasi": "Hangi kapıdan giriyorsun?",
+    "kurallarSayfasi": "Kafes’te oynayan herkes bunları okumuş sayılır."
+  },
+  "kafes": {
+    "acik": false,
+    "durum": "Kafes şu an için kapalı. İhtiyaç durumunda tekrar açılacaktır.",
+    "ad": "[TR] ▦ KAFES ▦ TRY HARD | BLACKOWLS.NET | HOSTED BY SQTR",
+    "ip": "5.9.104.40:7793"
+  },
+  "duyuru": {
+    "acik": false,
+    "metin": "",
+    "baglanti": ""
+  }
+}

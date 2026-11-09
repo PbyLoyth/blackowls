@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import rules from '../data/rules.json';
 import ruleFixes from '../data/rule-fixes.json';
-import { site } from '../data/site.js';
+import { site, ayarlar } from '../data/site.js';
 
 const DOC =
   'https://docs.google.com/document/d/e/2PACX-1vTjHH_yAUyJEJMaHeyV1b_HGQgW3ocWeTbM685GFQRPw9lVqaNvldKYisPtdFfTXxeQKzrgHdTCSlr5/pub';
@@ -32,9 +32,11 @@ const total = rules.sections.reduce((n, s) => n + s.rules.length, 0);
 >
   <div class="page on-light">
     <header class="head">
-      <h1 class="title">Kurallar. <span>Kafes’te oynayan herkes bunları okumuş sayılır.</span></h1>
-      <p class="head__server cap">{site.server.name}</p>
-      <p class="head__state"><i aria-hidden="true"></i>{site.server.status}</p>
+      <h1 class="title">Kurallar. <span data-ayar="basliklar.kurallarSayfasi">{ayarlar.basliklar.kurallarSayfasi}</span></h1>
+      <p class="head__server cap" data-ayar="kafes.ad">{site.server.name}</p>
+      <p class="head__state" data-ayar-durum="kafes.acik" data-durum={site.server.open ? 'acik' : 'kapali'}>
+        <i aria-hidden="true"></i><span data-ayar="kafes.durum">{site.server.status}</span>
+      </p>
     </header>
 
     <div class="doc">
@@ -93,7 +95,7 @@ const total = rules.sections.reduce((n, s) => n + s.rules.length, 0);
   .page {
     width: min(100% - 2 * var(--gutter), 1160px);
     margin-inline: auto;
-    padding-block: calc(var(--nav-h) + clamp(36px, 6vw, 80px)) clamp(64px, 8vw, 112px);
+    padding-block: calc(var(--ust-h) + clamp(36px, 6vw, 80px)) clamp(64px, 8vw, 112px);
   }
 
   .head {
@@ -119,6 +121,10 @@ const total = rules.sections.reduce((n, s) => n + s.rules.length, 0);
     font-weight: 500;
   }
 
+  .head__state[data-durum='acik'] i {
+    background: #248a3d;
+  }
+
   .head__state i {
     flex: none;
     width: 8px;
@@ -137,10 +143,10 @@ const total = rules.sections.reduce((n, s) => n + s.rules.length, 0);
 
   .side {
     position: sticky;
-    top: calc(var(--nav-h) + 24px);
+    top: calc(var(--ust-h) + 24px);
     display: grid;
     gap: 10px;
-    max-height: calc(100svh - var(--nav-h) - 48px);
+    max-height: calc(100svh - var(--ust-h) - 48px);
     overflow-y: auto;
   }
 
@@ -219,7 +225,7 @@ const total = rules.sections.reduce((n, s) => n + s.rules.length, 0);
 
   .sec {
     margin-top: clamp(36px, 5vw, 60px);
-    scroll-margin-top: calc(var(--nav-h) + 20px);
+    scroll-margin-top: calc(var(--ust-h) + 20px);
   }
 
   .sec__intro {
@@ -237,7 +243,7 @@ const total = rules.sections.reduce((n, s) => n + s.rules.length, 0);
     gap: 2px 12px;
     padding-block: 14px;
     border-top: 1px solid var(--g1);
-    scroll-margin-top: calc(var(--nav-h) + 20px);
+    scroll-margin-top: calc(var(--ust-h) + 20px);
     transition: background-color 400ms ease;
   }
 

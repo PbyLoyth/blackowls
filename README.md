@@ -44,6 +44,18 @@ X-Content-Type-Options: nosniff
 Referrer-Policy: strict-origin-when-cross-origin
 ```
 
+## Cloudflare Pages ve yönetim paneli
+
+Site Cloudflare Pages'te yayınlanırsa `/yonetim` sayfası çalışır: başvuruları açıp kapatma, başlıklar, Kafes durumu ve duyuru şeridi yeniden derleme gerekmeden değişir. Giriş Discord ile yapılır, yalnız izin verilen hesaplar girebilir. Kurulum, güvenlik kuralları ve yerelde deneme: [docs/YONETIM.md](docs/YONETIM.md).
+
+```bash
+npm run cf
+```
+
+Bu komut `dist/` klasörünü Functions ve yerel KV ile `http://localhost:8788` adresinde açar. Express ya da tek dosya sürümünde panel çalışmaz, site varsayılan metinlerle açılır.
+
+Cloudflare'de site nonce'lu CSP ve güvenlik başlıklarıyla sunulur. Rocket Loader kapalı olmalıdır. Güvenlik önlemleri ve saldırı testleri de aynı belgede.
+
 ## Tek dosya olarak paylaşma
 
 ```bash
@@ -58,8 +70,7 @@ Bu komut siteyi derler ve `paylasim/Black-owLs.html` dosyasını üretir. Görse
 | --- | --- |
 | Turnuva sonucu | `src/data/tournaments.js` (sayaçlar otomatik) |
 | Başvuru bilgileri | `src/data/paths.js` |
-| Başvuruları açma ve kapatma, bildirim metni | `src/data/site.js` içinde `applications` |
-| KAFES durum yazısı | `src/data/site.js` içinde `server.status` |
+| Başvurular, başlıklar, Kafes durumu, duyuru şeridi | Canlıda `/yonetim`; varsayılanlar `src/data/ayarlar.json` |
 | Menü, araçlar, sosyal hesaplar, sunucu | `src/data/site.js` |
 | Sunucu kuralları | Google Dokümanı'nı düzenle, `npm run build` çalıştır |
 | Kadro | Discord rolünden otomatik gelir |

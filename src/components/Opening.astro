@@ -1,4 +1,5 @@
 ---
+import { ayarlar } from '../data/site.js';
 ---
 
 <div class="opening" data-opening>
@@ -36,11 +37,11 @@
     <p class="hero__name">Black owLs</p>
     <h1 class="hero__title" id="hero-title">
       <span class="sr">Black owLs. </span>
-      <span class="dim">Dün kurulmadık.</span>
+      <span class="dim" data-ayar="basliklar.anaGri">{ayarlar.basliklar.anaGri}</span>
       <br />
-      <span>Yarın dağılmayacağız.</span>
+      <span data-ayar="basliklar.anaBeyaz">{ayarlar.basliklar.anaBeyaz}</span>
     </h1>
-    <p class="hero__sub intro">Sadece Türk oyunculardan oluşan bir kadroyla, 2018’den beri Squad sahnesinde.</p>
+    <p class="hero__sub intro" data-ayar="basliklar.altYazi">{ayarlar.basliklar.altYazi}</p>
     <div class="hero__cta">
       <a class="pill" href="/basvuru">Aramıza katıl</a>
       <button class="more" type="button" data-trailer>Fragmanı izle</button>
@@ -204,7 +205,8 @@
     z-index: 2;
     margin-top: -100svh;
     height: 100svh;
-    padding: calc(var(--nav-h) + clamp(28px, 6.4svh, 72px)) var(--gutter) 0;
+    /* Duyuru açıkken başlık şeridin altına iner ama yalnız gerektiği kadar, amblem yerinde kalır */
+    padding: max(calc(var(--nav-h) + clamp(28px, 6.4svh, 72px)), calc(var(--ust-h) + 14px)) var(--gutter) 0;
     text-align: center;
     pointer-events: none;
   }
@@ -223,7 +225,7 @@
   }
 
   .hero__title {
-    font-size: clamp(2.75rem, min(6.5vw, 11svh), 6.25rem);
+    font-size: clamp(2.0625rem, min(4.875vw, 8.25svh), 4.6875rem);
     line-height: 1.05;
     letter-spacing: -0.032em;
     font-weight: 600;
@@ -388,11 +390,18 @@
 
   @media (max-width: 640px) {
     .hero__title {
-      font-size: clamp(2.5rem, 11.4vw, 3.5rem);
+      font-size: clamp(1.6875rem, min(8.55vw, 4.5svh), 2.625rem);
     }
 
     .emblem {
       top: 56svh;
+    }
+  }
+
+  /* Kısa telefonlarda (iPhone SE gibi) düğmeler amblemin çemberine binmesin */
+  @media (max-width: 640px) and (max-height: 720px) {
+    .emblem {
+      top: 62svh;
     }
   }
 </style>

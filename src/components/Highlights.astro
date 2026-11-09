@@ -1,4 +1,6 @@
 ---
+import { ayarlar } from '../data/site.js';
+
 const items = [
   { id: 'tempo', text: 'Haftada 2 maç.', more: 'Turnuva döneminde 4 ile 5.' },
   { id: 'tank', text: 'Yılda en fazla 2 turnuva.', more: 'Hedef her zaman final.' },
@@ -10,7 +12,7 @@ const items = [
 
 <section class="hl" aria-labelledby="hl-title" data-gallery>
   <div class="w hl__head">
-    <h2 class="title" id="hl-title" data-fade>Öne çıkanlar.</h2>
+    <h2 class="title" id="hl-title" data-fade data-ayar="basliklar.oneCikanlar">{ayarlar.basliklar.oneCikanlar}</h2>
     <button class="more" type="button" data-trailer>Fragmanı izle</button>
   </div>
 

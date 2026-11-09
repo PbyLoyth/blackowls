@@ -1,6 +1,7 @@
 // Canlı kaynakları src/data altına anlık görüntü olarak yazar: kadro, Discord sayıları, sunucu kuralları.
 // Kaynak erişilemezse eski dosyaya dokunmaz, böylece çevrimdışı build de çalışır.
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { randomBytes } from 'node:crypto';
+import { mkdirSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -111,15 +112,27 @@ async function main() {
     if (!Array.isArray(list) || !list.length) throw new Error('Boş liste');
     const dir = join(ROOT, 'public', 'img', 'roster');
     mkdirSync(dir, { recursive: true });
+
+    // Görsel adları Discord kimliğini açık etmesin: her üyeye bir kez rastgele ad verilir, sonraki buildlerde aynı kalır
+    let eski = [];
+    try {
+      eski = JSON.parse(readFileSync(join(DATA, 'roster.json'), 'utf8'));
+    } catch {}
+    const adlar = new Map(
+      eski
+        .filter((m) => /^\/img\/roster\/[0-9a-f]{16}\.webp$/.test(m.image ?? ''))
+        .map((m) => [m.id, m.image.split('/').pop()]),
+    );
+
     const roster = [];
     for (const m of list) {
       const remote = `https://api.blackowls.net${m.avatarURL}`;
-      let image = remote;
+      let image = '/img/owl-mark.webp';
       try {
         // Discord avatarları birkaç MB olabiliyor: 176 piksel WebP'ye küçült
         const res = await fetch(remote);
         const buffer = Buffer.from(await res.arrayBuffer());
-        const file = `${m.discord_id}.webp`;
+        const file = adlar.get(m.discord_id) ?? `${randomBytes(8).toString('hex')}.webp`;
         await sharp(buffer, { animated: false }).resize(176, 176, { fit: 'cover' }).webp({ quality: 80 }).toFile(join(dir, file));
         image = `/img/roster/${file}`;
       } catch (err) {
@@ -128,6 +141,12 @@ async function main() {
       roster.push({ id: m.discord_id, name: cleanName(m.displayname), image });
     }
     save('roster.json', roster);
+
+    // Kadrodan çıkanların ve eski adlandırmanın görselleri yayına gitmesin
+    const kullanilan = new Set(roster.map((m) => m.image.split('/').pop()));
+    for (const file of readdirSync(dir)) {
+      if (file.endsWith('.webp') && !kullanilan.has(file)) unlinkSync(join(dir, file));
+    }
   });
 
   await step('discord', async () => {

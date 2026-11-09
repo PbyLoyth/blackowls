@@ -1,5 +1,7 @@
 // Başvuru yolları. Metinler sitenin ve Google Formların kendi ifadelerinden alındı.
 // Yazım kuralı: tam cümle noktayla biter, liste ve tablo parçasında nokta olmaz.
+import ayarlar from './ayarlar.json';
+
 export const paths = [
   {
     id: 'takim',
@@ -11,7 +13,7 @@ export const paths = [
     seek: 'Gamesense, gameplay ve aim: en az ikisi',
     reply: 'Recruit ekibi ulaşır',
     summary: 'Rekabet ortamı farklıdır. Maçlarımız yoğun, gergin ama unutulmaz geçer.',
-    form: 'https://docs.google.com/forms/d/e/1FAIpQLSfc1ojqPGIquy-ahSAkpw0e2bmQVYy2UOf1uDduz-AWTKdLkw/viewform',
+    form: ayarlar.basvuru.takimFormu,
     cta: 'Takım başvurusu',
     questions: 14,
     ladder: [
@@ -49,7 +51,7 @@ export const paths = [
     seek: 'Düzgün karakter, saygı ve hoşgörü',
     reply: 'Tanışma ekibi ulaşır',
     summary: 'Düzgün karakterde, zararsız bir kişi olman yeterli. Herkes başvurabilir.',
-    form: 'https://docs.google.com/forms/d/e/1FAIpQLSdZHmNnfefAiaus-j9lTa3TdPwePv8EAlP42bHRKR6Bf1Bovw/viewform',
+    form: ayarlar.basvuru.toplulukFormu,
     cta: 'Topluluk başvurusu',
     questions: 15,
     ladder: [

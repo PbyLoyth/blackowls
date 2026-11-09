@@ -9,13 +9,16 @@
     "assets": "python -I tools/build_assets.py",
     "build": "npm run sync && astro build",
     "preview": "astro preview --port 4322",
-    "paylas": "npm run build && node tools/tek-dosya.mjs"
+    "paylas": "npm run build && node tools/tek-dosya.mjs",
+    "cf": "wrangler pages dev dist --kv AYARLAR --compatibility-date=2026-11-01 --port 8788",
+    "test:yonetim": "node --test tests/yonetim/*.test.mjs"
   },
   "dependencies": {
     "@fontsource-variable/mona-sans": "^5.3.0",
     "astro": "^7.4.4"
   },
   "devDependencies": {
-    "sharp": "^0.35.5"
+    "sharp": "^0.35.5",
+    "wrangler": "^4.158.0"
   }
 }

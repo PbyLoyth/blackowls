@@ -1,5 +1,7 @@
 node_modules/
 dist/
 /paylasim/
+.dev.vars
+.wrangler/
 .astro/
 assets-src/trailer/

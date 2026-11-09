@@ -1,17 +1,21 @@
 ---
 import { applications } from '../data/site.js';
 
-const { form, class: className, ...rest } = Astro.props;
+const { form, alan, class: className, ...rest } = Astro.props;
+// İki hal de sayfada durur; canlıda ara katman geçerli olmayanı siler.
+// Başvurular kapalıyken form adresi HTML'ye hiç yazılmaz, açılınca ara katman ayarlardan ekler.
+const inner = await Astro.slots.render('default');
 ---
 
-{
-  applications.open ? (
-    <a class={className} href={form} target="_blank" rel="noopener" {...rest}>
-      <slot />
-    </a>
-  ) : (
-    <button class={className} type="button" data-apply {...rest}>
-      <slot />
-    </button>
-  )
-}
+<a
+  class={className}
+  href={applications.open ? form : undefined}
+  target="_blank"
+  rel="noopener"
+  data-ayar-goster="basvuru.acik"
+  data-ayar-ozellik={`href:basvuru.${alan}`}
+  hidden={!applications.open}
+  {...rest}
+  set:html={inner}
+/>
+<button class={className} type="button" data-apply data-ayar-gizle="basvuru.acik" hidden={applications.open} {...rest} set:html={inner} />
